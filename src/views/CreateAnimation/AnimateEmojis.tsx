@@ -1,12 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import { MojiElem } from './Side';
 import SvgChildrenPicker from '../../components/SvgChildrenPicker';
 import AnimationPicker, { AnimationData } from './AnimationPicker';
 import AnimationList from './AnimationsTable';
 import styled from 'styled-components';
-import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { SpeedContext } from './SpeedContext';
 import FinalRender from './FinalRender';
 import { H3 } from '../../components/Styled';
 
@@ -42,7 +40,6 @@ const AnimateEmojis: React.FC<{
     a: countI(animations, 'idx1'),
     b: countI(animations, 'idx2'),
   };
-  const { speed, duration } = useContext(SpeedContext);
   return (
     <>
       <H3>2. Create pairs of elements to animate</H3>
@@ -85,32 +82,8 @@ const AnimateEmojis: React.FC<{
           <FinalRender
             hexA={svgA.hex}
             hexB={svgB.hex}
-            speed={speed[0]}
-            duration={duration[0]}
             animations={animations}
           />
-          <div style={{ width: 250 }}>
-            <div style={{ marginBottom: 30 }}>
-              Duration:
-              <Slider
-                min={200}
-                max={10000}
-                step={50}
-                value={duration[0]}
-                onChange={(v) => duration[1](v)}
-              />
-            </div>
-            <div>
-              Spline steepness:
-              <Slider
-                min={0}
-                max={1}
-                step={0.01}
-                value={speed[0]}
-                onChange={(v) => speed[1](v)}
-              />
-            </div>
-          </div>
         </div>
         <AnimationList animations={animations} setAnimations={setAnimations} />
       </LastStep>

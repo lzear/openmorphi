@@ -1,10 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useRef, useContext } from 'react';
 import styled from 'styled-components';
-import { useCreateAnimationMutation } from '../../generated/graphql';
 import { useHistory } from 'react-router-dom';
 import { History } from 'history';
 import { Animated } from '../../AnimationGraph/AniPath';
 import { AnimElems } from './AnimateEmojis';
+import Slider from 'rc-slider';
+import { SpeedContext } from './SpeedContext';
+import { useCreateAnimationMutation } from '../../generated/graphql';
 
 interface Interface {
   readonly widthA?: number;
@@ -20,10 +22,10 @@ const FinalRender: React.FC<{
   animations: AnimElems[];
   hexA: string;
   hexB: string;
-  speed: number;
-  duration: number;
   width?: number;
-}> = ({ animations, speed, duration, hexA, hexB, width = 300 }) => {
+}> = ({ animations, hexA, hexB, width = 300 }) => {
+  const { speed, duration } = useContext(SpeedContext);
+
   const [save] = useCreateAnimationMutation();
   const ref = useRef<HTMLDivElement | null>(null);
 
@@ -36,15 +38,36 @@ const FinalRender: React.FC<{
             <Animated
               key={k}
               animation={animation.animation}
-              speed={speed}
-              duration={duration}
+              speed={speed[0]}
+              duration={duration[0]}
             />
           ))}
         </svg>
       </AnimationPreview>
       {animations.length > 0 && (
-        <div>
+        <>
+          <div style={{ marginBottom: 30 }}>
+            Duration:
+            <Slider
+              min={200}
+              max={10000}
+              step={50}
+              value={duration[0]}
+              onChange={(v) => duration[1](v)}
+            />
+          </div>
+          <div style={{ marginBottom: 30 }}>
+            Spline steepness:
+            <Slider
+              min={0}
+              max={1}
+              step={0.01}
+              value={speed[0]}
+              onChange={(v) => speed[1](v)}
+            />
+          </div>
           Proud of your animation?
+          <br />
           <button
             onClick={() => {
               if (!ref.current) return;
@@ -56,14 +79,14 @@ const FinalRender: React.FC<{
                 },
                 update: (a, b) => {
                   const id = b.data?.createAnimation._id;
-                  if (id) history.replace(`/animation?id=${id}`);
+                  if (id) history.replace(`/animations?id=${id}`);
                 },
               });
             }}
           >
             Save it!
           </button>
-        </div>
+        </>
       )}
     </>
   );
