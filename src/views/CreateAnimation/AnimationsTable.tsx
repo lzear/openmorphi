@@ -66,6 +66,7 @@ const AnimationList: React.FC<{
   return (
     <Container>
       <S
+        distance={1}
         del={(id: string) => setAnimations((a) => a.filter((b) => b.id !== id))}
         items={reversed}
         axis="y"
