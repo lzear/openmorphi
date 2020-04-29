@@ -7,6 +7,7 @@ directive @resolver(
 ) on FIELD_DEFINITION
 directive @relation(name: String) on FIELD_DEFINITION
 directive @unique(index: String) on FIELD_DEFINITION
+
 type Animation {
     _id: ID!
     html: String!
