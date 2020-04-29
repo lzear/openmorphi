@@ -1,0 +1,14 @@
+os: linux
+language: node_js
+node_js:
+  - "stable"
+install:
+  - yarn add codecov
+cache:
+  directories:
+    - node_modules
+script:
+  - yarn test --coverage --watchAll=false
+  - yarn build
+after_success:
+  - codecov

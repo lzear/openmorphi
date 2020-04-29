@@ -1,0 +1,12 @@
+query getAnimation (
+    $id: ID!
+) {
+    findAnimationByID (id: $id) {
+        _id
+        hexcode1
+        hexcode2
+        html
+        _ts
+
+    }
+}

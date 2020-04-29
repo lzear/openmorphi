@@ -1,0 +1,52 @@
+directive @embedded on OBJECT
+directive @collection(name: String!) on OBJECT
+directive @index(name: String!) on FIELD_DEFINITION
+directive @resolver(
+    name: String
+    paginated: Boolean! = false
+) on FIELD_DEFINITION
+directive @relation(name: String) on FIELD_DEFINITION
+directive @unique(index: String) on FIELD_DEFINITION
+type Animation {
+    _id: ID!
+    html: String!
+    hexcode1: String!
+    hexcode2: String!
+    _ts: Long!
+}
+
+input AnimationInput {
+    hexcode1: String!
+    hexcode2: String!
+    html: String!
+}
+
+type AnimationPage {
+    data: [Animation]!
+    after: String
+    before: String
+}
+
+scalar Date
+
+scalar Long
+
+type Mutation {
+    createAnimation(data: AnimationInput!): Animation!
+    updateAnimation(
+        id: ID!
+        data: AnimationInput!
+    ): Animation
+    deleteAnimation(id: ID!): Animation
+}
+
+type Query {
+    findAnimationByID(id: ID!): Animation
+    animations(
+        _size: Int
+        _cursor: String
+    ): AnimationPage!
+}
+
+scalar Time
+

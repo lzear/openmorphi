@@ -1,0 +1,19 @@
+query getAnimations (
+$size: Int
+$cursor: String
+) {
+    animations (
+        _size: $size
+        _cursor: $cursor
+    ) {
+        data {
+            _id
+            hexcode1
+            hexcode2
+            html
+            _ts
+        }
+        before
+        after
+    }
+}

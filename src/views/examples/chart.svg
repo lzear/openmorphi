@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+    <path stroke="none"
+          d="M 31.2111 28.8775 C 31.2111 28.8775 24.2779 21.0303 24.2779 21.0303 C 24.2779 21.0303 21.6814 23.5659 21.6814 23.5659 C 21.6814 23.5659 30.2683 34.5522 30.2683 34.5522 C 30.2783 34.5361 36.9506 31.2295 36.9506 31.2295 C 37.0875 31.161 48.2108 50.6096 48.2108 50.6096 C 48.2108 50.6096 51.3303 49.153 51.3303 49.153 C 51.3303 49.153 39.0144 25.8944 39.0144 25.8944 C 39.006 25.9143 31.4887 29.2462 31.2111 28.8775 C 31.2111 28.8775 31.2111 28.8775 31.2111 28.8775">
+        <animate attributeName="fill" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="#ea5a47;#92d3f5;#ea5a47"></animate>
+        <animate attributeName="d" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"
+                 values="M 30.5525 40.1841 C 30.5525 40.1841 22.556099999999997 52.7975 22.556099999999997 52.7975 C 22.556099999999997 52.7975 25.894699999999997 55.0008 25.894699999999997 55.0008 C 25.894699999999997 55.0008 31.385099999999998 46.0959 31.385099999999998 46.0959 C 31.639 45.6838 40.236799999999995 48.6366 40.236799999999995 48.6366 C 40.236799999999995 48.6366 51.104499999999994 22.834400000000002 51.104499999999994 22.834400000000002 C 51.104499999999994 22.834400000000002 47.41819999999999 21.281800000000004 47.41819999999999 21.281800000000004 C 47.41819999999999 21.281800000000004 38.02789999999999 42.8117 38.02789999999999 42.8117 C 37.8131 43.3215 30.5525 40.1841 30.5525 40.1841 C 30.5525 40.1841 30.5525 40.1841 30.5525 40.1841;M 31.2379 28.4166 C 31.2379 28.4166 24.3481 19.7354 24.3481 19.7354 C 24.3481 19.7354 21.5097 22.284499999999998 21.5097 22.284499999999998 C 21.5097 22.284499999999998 30.2228 34.0817 30.2228 34.0817 C 30.2228 34.0817 36.8166 30.519999999999996 36.8166 30.519999999999996 C 36.9591 30.448699999999995 48.0928 51.7418 48.0928 51.7418 C 48.0928 51.7418 51.489799999999995 50.2891 51.489799999999995 50.2891 C 51.489799999999995 50.2891 39.0546 25.2048 39.0546 25.2048 C 39.0546 25.2048 31.5269 28.8004 31.2379 28.4166 C 31.2379 28.4166 31.2379 28.4166 31.2379 28.4166;M 30.5525 40.1841 C 30.5525 40.1841 22.556099999999997 52.7975 22.556099999999997 52.7975 C 22.556099999999997 52.7975 25.894699999999997 55.0008 25.894699999999997 55.0008 C 25.894699999999997 55.0008 31.385099999999998 46.0959 31.385099999999998 46.0959 C 31.639 45.6838 40.236799999999995 48.6366 40.236799999999995 48.6366 C 40.236799999999995 48.6366 51.104499999999994 22.834400000000002 51.104499999999994 22.834400000000002 C 51.104499999999994 22.834400000000002 47.41819999999999 21.281800000000004 47.41819999999999 21.281800000000004 C 47.41819999999999 21.281800000000004 38.02789999999999 42.8117 38.02789999999999 42.8117 C 37.8131 43.3215 30.5525 40.1841 30.5525 40.1841 C 30.5525 40.1841 30.5525 40.1841 30.5525 40.1841"></animate>
+    </path>
+    <rect x="12.0515" y="12.0154" fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round"
+          stroke-linejoin="round" stroke-miterlimit="10" width="47.897" height="47.8969"></rect>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" y1="36.085" x2="59.8051" y2="36.085" x1="51.7699">
+        <animate attributeName="x1" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="50.0686;51.8392;50.0686"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" x1="12.739" y1="36.085" y2="36.085" x2="26.4758">
+        <animate attributeName="x2" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="37.1791;26.0395;37.1791"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" y1="47.9928" x2="59.6829" y2="47.9928" x1="54.8086">
+        <animate attributeName="x1" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="45.0242;55.2074;45.0242"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" x1="12.739" y1="47.9928" y2="47.9928" x2="40.5564">
+        <animate attributeName="x2" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="20.8186;41.3609;20.8186"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" x2="48.2509" y2="59.3704" y1="55.4681" x1="48.23">
+        <animate attributeName="x1" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="48.1334;48.2339;48.1334"></animate>
+        <animate attributeName="y1" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="40.4444;56.0805;40.4444"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" x1="48.033" y1="12.0588" y2="33.826" x2="48.1482">
+        <animate attributeName="x2" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="48.0367;48.1527;48.0367"></animate>
+        <animate attributeName="y2" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="17.1816;34.5045;17.1816"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" x1="36.1837" x2="36.1837" y2="59.5732" y1="38.71">
+        <animate attributeName="y1" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="51.6503;38.1825;51.6503"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" x1="36.1837" y1="12.3297" x2="36.1837" y2="22.8934">
+        <animate attributeName="y2" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="37.8307;22.2845;37.8307"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" x1="24.2253" x2="24.2253" y2="59.5732" y1="34.2929">
+        <animate attributeName="y1" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="58.6134;33.3016;58.6134"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" x1="24.2253" x2="24.2253" y1="12.1142" y2="16.7273">
+        <animate attributeName="y1" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="11.963;12.1204;11.963"></animate>
+        <animate attributeName="y2" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="43.0994;15.6523;43.0994"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" y1="24.1772" x2="59.2261" y2="24.1772" x1="43.7224">
+        <animate attributeName="x1" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="55.1837;43.2552;55.1837"></animate>
+    </line>
+    <line fill="none" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          stroke-miterlimit="10" x1="12.2635" y1="24.1772" y2="24.1772" x2="18.4997">
+        <animate attributeName="x2" dur="5000ms" repeatCount="indefinite" keyTimes="0;0.5;1" calcMode="spline"
+                 keySplines="0.4 0 0.2 1; 0.4 0 0.2 1" values="41.7514;17.5519;41.7514"></animate>
+    </line>
+</svg>
