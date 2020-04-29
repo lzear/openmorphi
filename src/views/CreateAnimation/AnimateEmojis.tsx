@@ -75,7 +75,7 @@ const AnimateEmojis: React.FC<{
       )}
 
       <H3>
-        4. Manage animated element (bring to front, bring to bottom, delete)
+        4. Manage animated element (drag to front, drag to bottom, delete)
       </H3>
       <LastStep>
         <div>
