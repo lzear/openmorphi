@@ -5,15 +5,12 @@ import Spinner from './Spinner';
 const SVG: React.FC<{ svg: string | null }> = ({ svg }) =>
   svg ? (
     <div
-      dangerouslySetInnerHTML={
-        svg
-          ? {
-              __html: DOMPurify.sanitize(svg, {
-                USE_PROFILES: { svg: true, svgFilters: true },
-              }),
-            }
-          : undefined
-      }
+      dangerouslySetInnerHTML={{
+        __html: DOMPurify.sanitize(svg, {
+          USE_PROFILES: { svg: true, svgFilters: true },
+          ADD_TAGS: ['animate'],
+        }),
+      }}
     />
   ) : (
     <Spinner />
