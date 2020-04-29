@@ -17,10 +17,9 @@ const SvgW = styled.div`
 
 const ButtonLink = styled.span`
   padding: 8px 20px;
-  background: blue;
+  background: cornflowerblue;
   color: white;
   font-size: 20px;
-  text-decoration: none !important;
 `;
 
 const Home: React.FC<{}> = () => {
@@ -40,7 +39,7 @@ const Home: React.FC<{}> = () => {
         <a href="https://github.com/lzear/openmorphi">create an issue</a>.
       </p>
       <p>
-        <Link to="/create">
+        <Link to="/create" style={{ textDecoration: 'none' }}>
           <ButtonLink>Create a new animation</ButtonLink>
         </Link>
       </p>

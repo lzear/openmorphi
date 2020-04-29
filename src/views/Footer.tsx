@@ -8,7 +8,7 @@ const Footer: React.FC<{}> = () => {
   return (
     <F>
       <p>
-        <a href="https://github.com/lzear/openmorphi">GitHub</a> |
+        <a href="https://github.com/lzear/openmorphi">GitHub</a> |{' '}
         <a href="https://www.elzear.de">Author</a>
       </p>
     </F>

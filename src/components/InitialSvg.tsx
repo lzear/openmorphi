@@ -6,6 +6,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { History } from 'history';
 import { OpenMojiContext } from '../withOpenMoji';
 import { addQueryParam } from '../useRedir';
+import SVG from './SVG';
 
 const Container = styled.div`
   width: 100px;
@@ -32,7 +33,7 @@ const InitialSvg: React.FC<{
           <ReloadOutlined />
         </button>
       )}
-      <div dangerouslySetInnerHTML={{ __html: svg }} />
+      <SVG svg={svg} />
     </Container>
   );
 };

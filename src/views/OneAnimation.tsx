@@ -3,17 +3,18 @@ import { Link } from 'react-router-dom';
 import { useGetAnimationQuery } from '../generated/graphql';
 import Spinner from '../components/Spinner';
 import { AnimationPreview } from './CreateAnimation/FinalRender';
+import SVG from '../components/SVG';
 
 const OneAnimation: React.FC<{ id: string }> = ({ id }) => {
   const { loading, error, data } = useGetAnimationQuery({ variables: { id } });
-  const anination = data?.findAnimationByID;
+  const animation = data?.findAnimationByID;
   let content = null;
   if (loading) content = <Spinner />;
   if (error) content = <p>Error</p>;
-  if (anination)
+  if (animation)
     content = (
       <AnimationPreview>
-        <div dangerouslySetInnerHTML={{ __html: anination.html }} />
+        <SVG svg={animation.html} />
       </AnimationPreview>
     );
   return (

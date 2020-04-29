@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Animation, useGetAnimationsQuery } from '../generated/graphql';
 import Spinner from '../components/Spinner';
 import { AnimationPreview } from './CreateAnimation/FinalRender';
+import SVG from '../components/SVG';
 
 const Tile = styled.div`
   display: inline-block;
@@ -31,7 +32,7 @@ const SavedAnimations: React.FC<{}> = () => {
               {moment(a._ts / 1000).format('HH:mm, dd MMM D YYYY')}
             </Link>
             <AnimationPreview widthA={150}>
-              <div dangerouslySetInnerHTML={{ __html: a.html }} />
+              <SVG svg={a.html} />
             </AnimationPreview>
           </Tile>
         ),
