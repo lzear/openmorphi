@@ -55,7 +55,7 @@ const AnimateEmojis: React.FC<{
 
       {elemA && elemB && (
         <>
-          <H3>3. Select animations that look okay</H3>
+          <H3>3. Select an animation that looks okay</H3>
           <AnimationPicker
             el1={elemA}
             el2={elemB}
