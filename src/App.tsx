@@ -5,6 +5,7 @@ import Emojinput from './components/Emojinput';
 import Spinner from './components/Spinner';
 import { Link } from 'react-router-dom';
 import { H2, H3 } from './components/Styled';
+import InitialSvg from './components/InitialSvg';
 
 const App: React.FC = () => {
   useRedir();
@@ -18,6 +19,19 @@ const App: React.FC = () => {
       <H2>Animate Emojis</H2>
       <H3>1. Find emoji pair to animate</H3>
       <Emojinput />
+      <div>
+        {svgA && (
+          <div style={{ float: 'left' }}>
+            <InitialSvg name="a" svg={svgA.svg} />
+          </div>
+        )}
+        {svgB && (
+          <div style={{ float: 'right' }}>
+            <InitialSvg name="b" svg={svgB.svg} />
+          </div>
+        )}
+        <div style={{ clear: 'both' }} />
+      </div>
       {svgA && svgB ? (
         <AnimateEmojis
           key={`${svgA.hex}-${svgB.hex}`}

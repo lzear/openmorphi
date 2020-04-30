@@ -42,7 +42,7 @@ const AnimateEmojis: React.FC<{
   };
   return (
     <>
-      <H3>2. Create pairs of elements to animate</H3>
+      <H3>2. Select pairs of elements to animate</H3>
       <SvgChildrenPicker
         counts={counts}
         svg1={svgA.svg}
@@ -53,40 +53,51 @@ const AnimateEmojis: React.FC<{
         selected2={elemB}
       />
 
-      <H3>3. Select animations that look okay</H3>
-      {elemA && elemB ? (
-        <AnimationPicker
-          el1={elemA}
-          el2={elemB}
-          select={(animation) =>
-            setAnimations((animations) => [
-              ...animations,
-              {
-                id: randomString(),
-                idx1: elemA.idx,
-                idx2: elemB.idx,
-                animation,
-              },
-            ])
-          }
-        />
-      ) : (
-        <div>-</div>
-      )}
-
-      <H3>
-        4. Manage animated element (drag to front, drag to bottom, delete)
-      </H3>
-      <LastStep>
-        <div>
-          <FinalRender
-            hexA={svgA.hex}
-            hexB={svgB.hex}
-            animations={animations}
+      {elemA && elemB && (
+        <>
+          <H3>3. Select animations that look okay</H3>
+          <AnimationPicker
+            el1={elemA}
+            el2={elemB}
+            select={(animation) =>
+              setAnimations((animations) => [
+                ...animations,
+                {
+                  id: randomString(),
+                  idx1: elemA.idx,
+                  idx2: elemB.idx,
+                  animation,
+                },
+              ])
+            }
           />
-        </div>
-        <AnimationList animations={animations} setAnimations={setAnimations} />
-      </LastStep>
+
+          {!!animations.length && (
+            <>
+              <H3 style={{ marginTop: 5 }}>
+                4. Repeat step 2. until all desired animations are selected.
+              </H3>
+              <H3>
+                5. Reorder animated element by dragging (top = front ; bottom =
+                background)
+              </H3>
+              <LastStep>
+                <div>
+                  <FinalRender
+                    hexA={svgA.hex}
+                    hexB={svgB.hex}
+                    animations={animations}
+                  />
+                </div>
+                <AnimationList
+                  animations={animations}
+                  setAnimations={setAnimations}
+                />
+              </LastStep>
+            </>
+          )}
+        </>
+      )}
     </>
   );
 };

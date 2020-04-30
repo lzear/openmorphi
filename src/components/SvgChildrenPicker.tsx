@@ -26,7 +26,6 @@ const SvgChildrenPicker: React.FC<{
     <Main>
       <Side
         counts={counts.a}
-        name="a"
         svg={svg1}
         selected={selected1}
         select={(el, idx) => select1({ idx, el })}
@@ -34,7 +33,6 @@ const SvgChildrenPicker: React.FC<{
       <Border />
       <Side
         counts={counts.b}
-        name="b"
         svg={svg2}
         selected={selected2}
         select={(el, idx) => select2({ idx, el })}

@@ -54,9 +54,8 @@ const AnimationPicker: React.FC<{
       (animation: AnimationData, k) => (
         <SvgPreview
           key={k}
-          onClick={() => {
-            select(animation);
-          }}
+          onClick={() => select(animation)}
+          style={{ cursor: 'pointer' }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
             <Animated animation={animation} />

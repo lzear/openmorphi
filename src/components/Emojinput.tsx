@@ -7,7 +7,7 @@ import Fuse from 'fuse.js';
 import MojiE from '../views/CreateAnimation/MojiSelect';
 import Spinner from './Spinner';
 
-const LIMIT = 50;
+const LIMIT = 64;
 const Emojinput: React.FC<{}> = () => {
   const json = useContext(OpenMojiContext);
   const [fuse, setFuse] = useState<Fuse<
