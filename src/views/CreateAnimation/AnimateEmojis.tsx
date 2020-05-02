@@ -19,7 +19,7 @@ export const LastStep = styled.div`
   display: flex;
 `;
 
-const randomString = () => `s${Math.random().toString(36).substring(7)}`;
+export const randomString = () => `s${Math.random().toString(36).substring(7)}`;
 
 const countI = (es: AnimElems[], key: 'idx1' | 'idx2') =>
   es.reduce((prev, cur) => {
