@@ -30,9 +30,9 @@ export type Animation = {
 };
 
 export type AnimationInput = {
+  html: Scalars['String'];
   hexcode1: Scalars['String'];
   hexcode2: Scalars['String'];
-  html: Scalars['String'];
 };
 
 export type AnimationPage = {
@@ -44,16 +44,57 @@ export type AnimationPage = {
 
 
 
+export type Morph = {
+   __typename?: 'Morph';
+  _id: Scalars['ID'];
+  data: Scalars['String'];
+  hexcode1: Scalars['String'];
+  hexcode2: Scalars['String'];
+  _ts: Scalars['Long'];
+};
+
+export type MorphInput = {
+  data: Scalars['String'];
+  hexcode1: Scalars['String'];
+  hexcode2: Scalars['String'];
+};
+
+export type MorphPage = {
+   __typename?: 'MorphPage';
+  data: Array<Maybe<Morph>>;
+  after?: Maybe<Scalars['String']>;
+  before?: Maybe<Scalars['String']>;
+};
+
 export type Mutation = {
    __typename?: 'Mutation';
+  createMorph: Morph;
   createAnimation: Animation;
+  updateMorph?: Maybe<Morph>;
+  deleteMorph?: Maybe<Morph>;
   updateAnimation?: Maybe<Animation>;
   deleteAnimation?: Maybe<Animation>;
 };
 
 
+export type MutationCreateMorphArgs = {
+  data: MorphInput;
+};
+
+
 export type MutationCreateAnimationArgs = {
   data: AnimationInput;
+};
+
+
+export type MutationUpdateMorphArgs = {
+  id: Scalars['ID'];
+  data: MorphInput;
+};
+
+
+export type MutationDeleteMorphArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -69,12 +110,21 @@ export type MutationDeleteAnimationArgs = {
 
 export type Query = {
    __typename?: 'Query';
-  findAnimationByID?: Maybe<Animation>;
+  sayHello: Scalars['String'];
+  morphs: MorphPage;
+  findMorphByID?: Maybe<Morph>;
   animations: AnimationPage;
+  findAnimationByID?: Maybe<Animation>;
 };
 
 
-export type QueryFindAnimationByIdArgs = {
+export type QueryMorphsArgs = {
+  _size?: Maybe<Scalars['Int']>;
+  _cursor?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryFindMorphByIdArgs = {
   id: Scalars['ID'];
 };
 
@@ -85,98 +135,141 @@ export type QueryAnimationsArgs = {
 };
 
 
-export type GetAnimationQueryVariables = {
+export type QueryFindAnimationByIdArgs = {
   id: Scalars['ID'];
 };
 
 
-export type GetAnimationQuery = (
+export type CreateMorphMutationVariables = {
+  hexcode1: Scalars['String'];
+  hexcode2: Scalars['String'];
+  data: Scalars['String'];
+};
+
+
+export type CreateMorphMutation = (
+  { __typename?: 'Mutation' }
+  & { createMorph: (
+    { __typename?: 'Morph' }
+    & Pick<Morph, '_id' | 'hexcode1' | 'hexcode2' | 'data' | '_ts'>
+  ) }
+);
+
+export type FindMorphByIdQueryVariables = {
+  id: Scalars['ID'];
+};
+
+
+export type FindMorphByIdQuery = (
   { __typename?: 'Query' }
-  & { findAnimationByID?: Maybe<(
-    { __typename?: 'Animation' }
-    & Pick<Animation, '_id' | 'hexcode1' | 'hexcode2' | 'html' | '_ts'>
+  & { findMorphByID?: Maybe<(
+    { __typename?: 'Morph' }
+    & Pick<Morph, '_id' | 'hexcode1' | 'hexcode2' | 'data' | '_ts'>
   )> }
 );
 
-export type GetAnimationsQueryVariables = {
+export type MorphsQueryVariables = {
   size?: Maybe<Scalars['Int']>;
   cursor?: Maybe<Scalars['String']>;
 };
 
 
-export type GetAnimationsQuery = (
+export type MorphsQuery = (
   { __typename?: 'Query' }
-  & { animations: (
-    { __typename?: 'AnimationPage' }
-    & Pick<AnimationPage, 'before' | 'after'>
+  & { morphs: (
+    { __typename?: 'MorphPage' }
+    & Pick<MorphPage, 'before' | 'after'>
     & { data: Array<Maybe<(
-      { __typename?: 'Animation' }
-      & Pick<Animation, '_id' | 'hexcode1' | 'hexcode2' | 'html' | '_ts'>
+      { __typename?: 'Morph' }
+      & Pick<Morph, '_id' | 'hexcode1' | 'hexcode2' | 'data' | '_ts'>
     )>> }
   ) }
 );
 
-export type CreateAnimationMutationVariables = {
-  hexcode1: Scalars['String'];
-  hexcode2: Scalars['String'];
-  html: Scalars['String'];
-};
 
-
-export type CreateAnimationMutation = (
-  { __typename?: 'Mutation' }
-  & { createAnimation: (
-    { __typename?: 'Animation' }
-    & Pick<Animation, '_id' | 'hexcode1' | 'hexcode2' | '_ts'>
-  ) }
-);
-
-
-export const GetAnimationDocument = gql`
-    query getAnimation($id: ID!) {
-  findAnimationByID(id: $id) {
+export const CreateMorphDocument = gql`
+    mutation createMorph($hexcode1: String!, $hexcode2: String!, $data: String!) {
+  createMorph(data: {hexcode1: $hexcode1, hexcode2: $hexcode2, data: $data}) {
     _id
     hexcode1
     hexcode2
-    html
+    data
+    _ts
+  }
+}
+    `;
+export type CreateMorphMutationFn = ApolloReactCommon.MutationFunction<CreateMorphMutation, CreateMorphMutationVariables>;
+
+/**
+ * __useCreateMorphMutation__
+ *
+ * To run a mutation, you first call `useCreateMorphMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateMorphMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createMorphMutation, { data, loading, error }] = useCreateMorphMutation({
+ *   variables: {
+ *      hexcode1: // value for 'hexcode1'
+ *      hexcode2: // value for 'hexcode2'
+ *      data: // value for 'data'
+ *   },
+ * });
+ */
+export function useCreateMorphMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateMorphMutation, CreateMorphMutationVariables>) {
+        return ApolloReactHooks.useMutation<CreateMorphMutation, CreateMorphMutationVariables>(CreateMorphDocument, baseOptions);
+      }
+export type CreateMorphMutationHookResult = ReturnType<typeof useCreateMorphMutation>;
+export type CreateMorphMutationResult = ApolloReactCommon.MutationResult<CreateMorphMutation>;
+export type CreateMorphMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateMorphMutation, CreateMorphMutationVariables>;
+export const FindMorphByIdDocument = gql`
+    query findMorphByID($id: ID!) {
+  findMorphByID(id: $id) {
+    _id
+    hexcode1
+    hexcode2
+    data
     _ts
   }
 }
     `;
 
 /**
- * __useGetAnimationQuery__
+ * __useFindMorphByIdQuery__
  *
- * To run a query within a React component, call `useGetAnimationQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAnimationQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useFindMorphByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useFindMorphByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAnimationQuery({
+ * const { data, loading, error } = useFindMorphByIdQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetAnimationQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetAnimationQuery, GetAnimationQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetAnimationQuery, GetAnimationQueryVariables>(GetAnimationDocument, baseOptions);
+export function useFindMorphByIdQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindMorphByIdQuery, FindMorphByIdQueryVariables>) {
+        return ApolloReactHooks.useQuery<FindMorphByIdQuery, FindMorphByIdQueryVariables>(FindMorphByIdDocument, baseOptions);
       }
-export function useGetAnimationLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAnimationQuery, GetAnimationQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetAnimationQuery, GetAnimationQueryVariables>(GetAnimationDocument, baseOptions);
+export function useFindMorphByIdLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindMorphByIdQuery, FindMorphByIdQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<FindMorphByIdQuery, FindMorphByIdQueryVariables>(FindMorphByIdDocument, baseOptions);
         }
-export type GetAnimationQueryHookResult = ReturnType<typeof useGetAnimationQuery>;
-export type GetAnimationLazyQueryHookResult = ReturnType<typeof useGetAnimationLazyQuery>;
-export type GetAnimationQueryResult = ApolloReactCommon.QueryResult<GetAnimationQuery, GetAnimationQueryVariables>;
-export const GetAnimationsDocument = gql`
-    query getAnimations($size: Int, $cursor: String) {
-  animations(_size: $size, _cursor: $cursor) {
+export type FindMorphByIdQueryHookResult = ReturnType<typeof useFindMorphByIdQuery>;
+export type FindMorphByIdLazyQueryHookResult = ReturnType<typeof useFindMorphByIdLazyQuery>;
+export type FindMorphByIdQueryResult = ApolloReactCommon.QueryResult<FindMorphByIdQuery, FindMorphByIdQueryVariables>;
+export const MorphsDocument = gql`
+    query morphs($size: Int, $cursor: String) {
+  morphs(_size: $size, _cursor: $cursor) {
     data {
       _id
       hexcode1
       hexcode2
-      html
+      data
       _ts
     }
     before
@@ -186,68 +279,31 @@ export const GetAnimationsDocument = gql`
     `;
 
 /**
- * __useGetAnimationsQuery__
+ * __useMorphsQuery__
  *
- * To run a query within a React component, call `useGetAnimationsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetAnimationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useMorphsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useMorphsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetAnimationsQuery({
+ * const { data, loading, error } = useMorphsQuery({
  *   variables: {
  *      size: // value for 'size'
  *      cursor: // value for 'cursor'
  *   },
  * });
  */
-export function useGetAnimationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<GetAnimationsQuery, GetAnimationsQueryVariables>) {
-        return ApolloReactHooks.useQuery<GetAnimationsQuery, GetAnimationsQueryVariables>(GetAnimationsDocument, baseOptions);
+export function useMorphsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MorphsQuery, MorphsQueryVariables>) {
+        return ApolloReactHooks.useQuery<MorphsQuery, MorphsQueryVariables>(MorphsDocument, baseOptions);
       }
-export function useGetAnimationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<GetAnimationsQuery, GetAnimationsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<GetAnimationsQuery, GetAnimationsQueryVariables>(GetAnimationsDocument, baseOptions);
+export function useMorphsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MorphsQuery, MorphsQueryVariables>) {
+          return ApolloReactHooks.useLazyQuery<MorphsQuery, MorphsQueryVariables>(MorphsDocument, baseOptions);
         }
-export type GetAnimationsQueryHookResult = ReturnType<typeof useGetAnimationsQuery>;
-export type GetAnimationsLazyQueryHookResult = ReturnType<typeof useGetAnimationsLazyQuery>;
-export type GetAnimationsQueryResult = ApolloReactCommon.QueryResult<GetAnimationsQuery, GetAnimationsQueryVariables>;
-export const CreateAnimationDocument = gql`
-    mutation createAnimation($hexcode1: String!, $hexcode2: String!, $html: String!) {
-  createAnimation(data: {hexcode1: $hexcode1, hexcode2: $hexcode2, html: $html}) {
-    _id
-    hexcode1
-    hexcode2
-    _ts
-  }
-}
-    `;
-export type CreateAnimationMutationFn = ApolloReactCommon.MutationFunction<CreateAnimationMutation, CreateAnimationMutationVariables>;
-
-/**
- * __useCreateAnimationMutation__
- *
- * To run a mutation, you first call `useCreateAnimationMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateAnimationMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createAnimationMutation, { data, loading, error }] = useCreateAnimationMutation({
- *   variables: {
- *      hexcode1: // value for 'hexcode1'
- *      hexcode2: // value for 'hexcode2'
- *      html: // value for 'html'
- *   },
- * });
- */
-export function useCreateAnimationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateAnimationMutation, CreateAnimationMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateAnimationMutation, CreateAnimationMutationVariables>(CreateAnimationDocument, baseOptions);
-      }
-export type CreateAnimationMutationHookResult = ReturnType<typeof useCreateAnimationMutation>;
-export type CreateAnimationMutationResult = ApolloReactCommon.MutationResult<CreateAnimationMutation>;
-export type CreateAnimationMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateAnimationMutation, CreateAnimationMutationVariables>;
+export type MorphsQueryHookResult = ReturnType<typeof useMorphsQuery>;
+export type MorphsLazyQueryHookResult = ReturnType<typeof useMorphsLazyQuery>;
+export type MorphsQueryResult = ApolloReactCommon.QueryResult<MorphsQuery, MorphsQueryVariables>;
 
       export interface IntrospectionResultData {
         __schema: {

@@ -16,13 +16,13 @@ const Side: React.FC<{
 }> = ({ svg, select, selected, counts }) => {
   const parser = new DOMParser();
   const htmlDoc = parser.parseFromString(svg, 'text/html').body;
-  const svgelems = explore(htmlDoc);
+  const svgElements = explore(htmlDoc);
   return (
     <Container>
-      {svgelems && (
+      {svgElements && (
         <SvgElements
           counts={counts}
-          els={svgelems}
+          els={svgElements}
           select={(e, k) => select(e, k)}
           selected={selected?.idx}
         />

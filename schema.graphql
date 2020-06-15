@@ -7,7 +7,6 @@ directive @resolver(
 ) on FIELD_DEFINITION
 directive @relation(name: String) on FIELD_DEFINITION
 directive @unique(index: String) on FIELD_DEFINITION
-
 type Animation {
     _id: ID!
     html: String!
@@ -17,9 +16,9 @@ type Animation {
 }
 
 input AnimationInput {
+    html: String!
     hexcode1: String!
     hexcode2: String!
-    html: String!
 }
 
 type AnimationPage {
@@ -32,8 +31,34 @@ scalar Date
 
 scalar Long
 
+type Morph {
+    _id: ID!
+    data: String!
+    hexcode1: String!
+    hexcode2: String!
+    _ts: Long!
+}
+
+input MorphInput {
+    data: String!
+    hexcode1: String!
+    hexcode2: String!
+}
+
+type MorphPage {
+    data: [Morph]!
+    after: String
+    before: String
+}
+
 type Mutation {
+    createMorph(data: MorphInput!): Morph!
     createAnimation(data: AnimationInput!): Animation!
+    updateMorph(
+        id: ID!
+        data: MorphInput!
+    ): Morph
+    deleteMorph(id: ID!): Morph
     updateAnimation(
         id: ID!
         data: AnimationInput!
@@ -42,11 +67,17 @@ type Mutation {
 }
 
 type Query {
-    findAnimationByID(id: ID!): Animation
+    sayHello: String!
+    morphs(
+        _size: Int
+        _cursor: String
+    ): MorphPage!
+    findMorphByID(id: ID!): Morph
     animations(
         _size: Int
         _cursor: String
     ): AnimationPage!
+    findAnimationByID(id: ID!): Animation
 }
 
 scalar Time

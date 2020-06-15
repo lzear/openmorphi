@@ -2,11 +2,13 @@ import React, { useRef, useContext } from 'react';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { History } from 'history';
-import { Animated } from '../../AnimationGraph/AniPath';
-import { AnimElems } from './AnimateEmojis';
 import Slider from 'rc-slider';
+import { Animated } from '../../AnimationGraph/SvgAnimate';
 import { SpeedContext } from './SpeedContext';
-import { useCreateAnimationMutation } from '../../generated/graphql';
+import { useCreateMorphMutation } from '../../generated/graphql';
+import { AnimationElement } from '../../types';
+import { MorphData } from '../../fauna';
+import { validate } from '../../utils/svgsanitize';
 
 interface Interface {
   readonly widthA?: number;
@@ -18,52 +20,71 @@ export const AnimationPreview = styled.div<Interface>`
   border: 1px solid black;
 `;
 
-const FinalRender: React.FC<{
-  animations: AnimElems[];
-  hexA: string;
-  hexB: string;
-  width?: number;
-}> = ({ animations, hexA, hexB, width = 300 }) => {
-  const { speed, duration } = useContext(SpeedContext);
+export const ViewAnimationElements = ({
+  animations,
+  spline,
+  duration,
+}: {
+  animations: AnimationElement[];
+  spline: number;
+  duration: number;
+}) => (
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
+    {animations.map((animation, k) => (
+      <Animated
+        key={k}
+        animation={animation}
+        spline={spline}
+        duration={duration}
+      />
+    ))}
+  </svg>
+);
 
-  const [save] = useCreateAnimationMutation();
+const FinalRender: React.FC<{
+  animations: AnimationElement[];
+  // morphi: MorphData;
+  hexcode1: string;
+  hexcode2: string;
+  width?: number;
+}> = ({ animations, hexcode1, hexcode2, width = 300 }) => {
+  const { splineTuple, durationTuple } = useContext(SpeedContext);
+
+  const [save] = useCreateMorphMutation();
   const ref = useRef<HTMLDivElement | null>(null);
 
   const history: History = useHistory();
   return (
-    <>
+    <div>
       <AnimationPreview ref={ref} widthA={width}>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
-          {animations.map((animation, k) => (
-            <Animated
-              key={k}
-              animation={animation.animation}
-              speed={speed[0]}
-              duration={duration[0]}
-            />
-          ))}
-        </svg>
+        <ViewAnimationElements
+          animations={animations}
+          spline={splineTuple[0]}
+          duration={durationTuple[0]}
+        />
       </AnimationPreview>
       {animations.length > 0 && (
         <>
           <div style={{ marginBottom: 30 }}>
             Duration:
+            {/* @ts-ignore */}
             <Slider
               min={200}
               max={10000}
               step={50}
-              value={duration[0]}
-              onChange={(v) => duration[1](v)}
+              value={durationTuple[0]}
+              onChange={(v: number) => durationTuple[1](v)}
             />
           </div>
           <div style={{ marginBottom: 30 }}>
             Spline steepness:
+            {/* @ts-ignore */}
             <Slider
               min={0}
               max={1}
               step={0.01}
-              value={speed[0]}
-              onChange={(v) => speed[1](v)}
+              value={splineTuple[0]}
+              onChange={(v: number) => splineTuple[1](v)}
             />
           </div>
           Proud of your animation?
@@ -71,24 +92,30 @@ const FinalRender: React.FC<{
           <button
             onClick={() => {
               if (!ref.current) return;
-              return save({
-                variables: {
-                  html: ref.current.innerHTML,
-                  hexcode1: hexA,
-                  hexcode2: hexB,
-                },
-                update: (a, b) => {
-                  const id = b.data?.createAnimation._id;
-                  if (id) history.replace(`/animations?id=${id}`);
-                },
-              });
+              const morphi: MorphData = {
+                spline: splineTuple[0],
+                duration: durationTuple[0],
+                svgElements: animations,
+              };
+              if (validate(morphi))
+                return save({
+                  variables: {
+                    data: JSON.stringify(morphi),
+                    hexcode1: hexcode1,
+                    hexcode2: hexcode2,
+                  },
+                  update: (a, b) => {
+                    const id = b.data?.createMorph._id;
+                    if (id) history.replace(`/animations?id=${id}`);
+                  },
+                });
             }}
           >
             Save it!
           </button>
         </>
       )}
-    </>
+    </div>
   );
 };
 

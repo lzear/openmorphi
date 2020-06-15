@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRedir, useMojiHtml } from './useRedir';
-import AnimateEmojis from './views/CreateAnimation/AnimateEmojis';
+import AnimationMaker from './views/CreateAnimation/AnimationMaker';
 import Emojinput from './components/Emojinput';
 import Spinner from './components/Spinner';
 import { Link } from 'react-router-dom';
@@ -9,8 +9,8 @@ import InitialSvg from './components/InitialSvg';
 
 const App: React.FC = () => {
   useRedir();
-  const svgA = useMojiHtml('a');
-  const svgB = useMojiHtml('b');
+  const svg1 = useMojiHtml('a');
+  const svg2 = useMojiHtml('b');
   return (
     <>
       <p>
@@ -20,23 +20,23 @@ const App: React.FC = () => {
       <H3>1. Find emoji pair to animate</H3>
       <Emojinput />
       <div>
-        {svgA && (
+        {svg1 && (
           <div style={{ float: 'left' }}>
-            <InitialSvg name="a" svg={svgA.svg} />
+            <InitialSvg name="a" svg={svg1.svg} />
           </div>
         )}
-        {svgB && (
+        {svg2 && (
           <div style={{ float: 'right' }}>
-            <InitialSvg name="b" svg={svgB.svg} />
+            <InitialSvg name="b" svg={svg2.svg} />
           </div>
         )}
         <div style={{ clear: 'both' }} />
       </div>
-      {svgA && svgB ? (
-        <AnimateEmojis
-          key={`${svgA.hex}-${svgB.hex}`}
-          svgA={svgA}
-          svgB={svgB}
+      {svg1 && svg2 ? (
+        <AnimationMaker
+          key={`${svg1.hex}-${svg2.hex}`}
+          svg1={svg1}
+          svg2={svg2}
         />
       ) : (
         <Spinner />

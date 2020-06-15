@@ -1,8 +1,8 @@
-import { Shape, Instruction } from './Path';
+import { Path, Instruction } from './Path';
 
-const extendPoly = (p1: Shape, n: number) => {
+const extendPoly = (p1: Path, n: number) => {
   const values = p1.instructions[p1.instructions.length - 1].values || [0, 0];
-  return new Shape([
+  return new Path([
     ...p1.instructions,
     ...Array(n).fill({
       letter: 'L',
@@ -11,7 +11,7 @@ const extendPoly = (p1: Shape, n: number) => {
   ]);
 };
 
-const adjustLengths = (n1: Shape, n2: Shape) => {
+const adjustLengths = (n1: Path, n2: Path) => {
   const dif = n2.length - n1.length;
   let nn1 = n1;
   let nn2 = n2;
@@ -28,8 +28,8 @@ export const adjustPointsLength: (
   p2: string,
 ) => [string, string][] = (p1: string, p2: string) => {
   const [s1, s2] = adjustLengths(
-    Shape.fromString(`M${p1}`),
-    Shape.fromString(`M${p2}`),
+    Path.fromString(`M${p1}`),
+    Path.fromString(`M${p2}`),
   );
   return [
     [

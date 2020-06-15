@@ -1,8 +1,8 @@
 import { ElementPolygon, ElementPolyline } from './index';
 
-export const polygon2polyline = (line: ElementPolygon) => {
+export const polygon2polyline = (line: ElementPolygon): ElementPolyline => {
   return {
-    type: 'polyline',
-    props: { ...line.props },
-  } as ElementPolyline;
+    tagName: 'polyline',
+    attributes: { ...line.attributes },
+  };
 };

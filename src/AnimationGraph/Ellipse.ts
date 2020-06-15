@@ -13,13 +13,13 @@ function getD(cx: number, cy: number, rx: number, ry: number) {
   return d;
 }
 
-export const ellipse2path = (e: ElementEllipse) => {
-  const { cx, cy, rx, ry, ...props } = e.props;
+export const ellipse2path = (e: ElementEllipse): ElementPath => {
+  const { cx, cy, rx, ry, ...props } = e.attributes;
   return {
-    type: 'path',
-    props: {
+    tagName: 'path',
+    attributes: {
       ...props,
       d: getD(Number(cx), Number(cy), Number(rx), Number(ry)),
     },
-  } as ElementPath;
+  };
 };

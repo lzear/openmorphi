@@ -1,0 +1,15 @@
+mutation createMorph (
+    $hexcode1: String!
+    $hexcode2: String!
+    $data: String!
+) {
+    createMorph (
+        data: {hexcode1: $hexcode1, hexcode2: $hexcode2, data: $data}
+    ) {
+        _id
+        hexcode1
+        hexcode2
+        data
+        _ts
+    }
+}

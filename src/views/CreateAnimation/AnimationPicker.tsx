@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { generateAnimationObjets } from '../../AnimationGraph';
 import { MojiElem } from './Side';
-import { Animated, ElementProps } from '../../AnimationGraph/AniPath';
-import { OkTags } from '../../components/getelems';
+import { Animated } from '../../AnimationGraph/SvgAnimate';
+import { AnimationData } from '../../types';
 
 export const SvgPreview = styled.div`
   width: 130px;
@@ -37,12 +37,6 @@ export const SvgPreview = styled.div`
   transition: none;
   transform: scaleX(1) scaleY(1) scaleZ(1);
 `;
-
-export type AnimationData = {
-  attributesConstant: ElementProps;
-  attributesToAnimate: { [p: string]: [string | null, string | null] };
-  tagName: OkTags;
-};
 
 const AnimationPicker: React.FC<{
   el1: MojiElem;

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MojiElement } from '../AnimationGraph';
-import { DisplayE } from '../AnimationGraph/AniPath';
+import { DisplaySvgElement } from '../AnimationGraph/SvgAnimate';
 
 const SvgContainer = styled.div<{
   selected: boolean;
@@ -61,7 +61,7 @@ const SvgElements: React.FC<{
         selected={selected === k}
       >
         <div style={{ color: 'grey' }}>
-          <span>{e.type}</span>
+          <span>{e.tagName}</span>
           <span
             style={{
               float: 'right',
@@ -74,7 +74,7 @@ const SvgElements: React.FC<{
         </div>
         <Checkered>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
-            <DisplayE el={e} />
+            <DisplaySvgElement el={e} />
           </svg>
         </Checkered>
       </SvgContainer>
