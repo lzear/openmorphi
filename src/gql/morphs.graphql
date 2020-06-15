@@ -1,8 +1,8 @@
-query getAnimations (
+query morphs (
 $size: Int
 $cursor: String
 ) {
-    animations (
+    morphs (
         _size: $size
         _cursor: $cursor
     ) {
@@ -10,7 +10,7 @@ $cursor: String
             _id
             hexcode1
             hexcode2
-            html
+            data
             _ts
         }
         before

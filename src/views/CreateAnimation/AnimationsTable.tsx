@@ -4,8 +4,8 @@ import arrayMove from 'array-move';
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import { DeleteOutlined } from '@ant-design/icons';
 import Animation from '../../components/Animation';
-import { AnimElems } from './AnimateEmojis';
 import styled from 'styled-components';
+import { AnimationElement } from '../../types';
 
 const Container = styled.div`
   margin: 5px;
@@ -16,7 +16,7 @@ const Element = styled.div`
   // display: inline-block;
 `;
 
-type Reversed = AnimElems & { i: number };
+type Reversed = AnimationElement & { i: number };
 
 const SList = ({
   items,
@@ -43,7 +43,7 @@ const SEl = ({
     <button style={{ position: 'absolute' }} onClick={() => del(value.id)}>
       <DeleteOutlined />
     </button>
-    <Animation anim={value.animation} width={80} />
+    <Animation anim={value} width={80} />
   </Element>
 );
 
@@ -53,8 +53,8 @@ const SortableItem = SortableElement<{
 }>(SEl);
 
 const AnimationList: React.FC<{
-  animations: AnimElems[];
-  setAnimations: Dispatch<SetStateAction<AnimElems[]>>;
+  animations: AnimationElement[];
+  setAnimations: Dispatch<SetStateAction<AnimationElement[]>>;
 }> = ({ animations, setAnimations }) => {
   const reversed: Reversed[] = animations
     .map((a, i) => ({ ...a, i }))

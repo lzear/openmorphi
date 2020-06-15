@@ -1,13 +1,13 @@
 import { ElementCircle, ElementEllipse } from './index';
 
-export const circle2ellipse = (e: ElementCircle) => {
-  const { r, ...props } = e.props;
+export const circle2ellipse = (e: ElementCircle): ElementEllipse => {
+  const { r, ...props } = e.attributes;
   return {
-    type: 'ellipse',
-    props: {
+    tagName: 'ellipse',
+    attributes: {
       ...props,
       rx: r,
       ry: r,
     },
-  } as ElementEllipse;
+  };
 };

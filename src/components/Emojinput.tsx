@@ -6,7 +6,7 @@ import { History } from 'history';
 import Fuse from 'fuse.js';
 import MojiE from '../views/CreateAnimation/MojiSelect';
 import Spinner from './Spinner';
-import { randomString } from '../views/CreateAnimation/AnimateEmojis';
+import { randomString } from '../views/CreateAnimation/AnimationMaker';
 
 const LIMIT = 64;
 const Emojinput: React.FC<{}> = () => {

@@ -3,10 +3,14 @@ import faunadb from 'faunadb';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Animation } from '../generated/graphql';
+import { MorphInput } from '../generated/graphql';
 import Spinner from '../components/Spinner';
-import { AnimationPreview } from './CreateAnimation/FinalRender';
-import SVG from '../components/SVG';
+import {
+  AnimationPreview,
+  ViewAnimationElements,
+} from './CreateAnimation/FinalRender';
+import { MorphData } from '../fauna';
+import { validate } from '../utils/svgsanitize';
 
 const Tile = styled.div`
   display: inline-block;
@@ -18,15 +22,23 @@ const client = new faunadb.Client({
 });
 
 const SavedAnimations: React.FC<{}> = () => {
-  const [anims, setAnims] = useState<Animation[] | null>(null);
+  const [anims, setAnims] = useState<
+    (MorphData & { ts: number; id: number })[] | null
+  >(null);
   /**
    * Unfortunately, I couldn't find an easy way to get the last page using GraphQL
    */
   useEffect(() => {
     const load = async () => {
-      const a: any = await client.query(
+      const a: {
+        data: {
+          data: MorphInput;
+          ts: number;
+          ref: { value: { id: number } };
+        }[];
+      } = await client.query(
         q.Map(
-          q.Paginate(q.Match(q.Index('animations')), {
+          q.Paginate(q.Match(q.Index('morphs')), {
             size: 20,
             before: null,
           }),
@@ -35,17 +47,12 @@ const SavedAnimations: React.FC<{}> = () => {
       );
       if (a.data) {
         const c = a.data
-          .map(
-            (b: any) =>
-              ({
-                hexcode1: b.data.hexcode1,
-                hexcode2: b.data.hexcode2,
-                html: b.data.html,
-                _ts: b.ts,
-                _id: b.ref.value.id,
-              } as Animation),
-          )
-          .reverse();
+          .map((morph) => {
+            const morphData: MorphData = JSON.parse(morph.data.data);
+            return { ...morphData, ts: morph.ts, id: morph.ref.value.id };
+          })
+          .reverse()
+          .filter(validate);
         setAnims(c);
       }
     };
@@ -54,13 +61,17 @@ const SavedAnimations: React.FC<{}> = () => {
   return (
     <div>
       {anims ? (
-        anims.map((a: Animation) => (
-          <Tile key={a._id}>
-            <Link to={'/animations?id=' + a._id}>
-              {moment(a._ts / 1000).format('HH:mm, dd MMM D YYYY')}
+        anims.map((a) => (
+          <Tile key={a.id}>
+            <Link to={'/animations?id=' + a.id}>
+              {moment(a.ts / 1000).format('HH:mm, dd MMM D YYYY')}
             </Link>
             <AnimationPreview widthA={150}>
-              <SVG svg={a.html} />
+              <ViewAnimationElements
+                animations={a.svgElements}
+                spline={a.spline}
+                duration={a.duration}
+              />
             </AnimationPreview>
           </Tile>
         ))

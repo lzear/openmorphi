@@ -1,4 +1,6 @@
-import { toMojiElement, MojiElement } from '../AnimationGraph';
+import { MojiElement } from '../AnimationGraph';
+import { OkTagNames } from '../types';
+import { getAttributes } from '../AnimationGraph/SvgAnimate';
 
 export function flatMap<T, U>(
   array: T[],
@@ -16,27 +18,11 @@ const okTags = [
   'rect',
   'polygon',
 ];
-export type OkTags =
-  | 'line'
-  | 'path'
-  | 'circle'
-  | 'ellipse'
-  | 'polyline'
-  | 'rect'
-  | 'polygon';
-
-export type OkEl =
-  | SVGLineElement
-  | SVGPathElement
-  | SVGCircleElement
-  | SVGEllipseElement
-  | SVGPolylineElement
-  | SVGPolygonElement;
 
 const explore = (el: Element): MojiElement[] => {
   const { tagName } = el;
   if (okTags.includes(tagName.toLowerCase()))
-    return [toMojiElement(el as OkEl)];
+    return [{ tagName: tagName as OkTagNames, attributes: getAttributes(el) }];
   if (['defs', 'use', 'clippath'].includes(tagName.toLowerCase())) return [];
   const ch = flatMap(Array.from(el.children), (e: Element) => explore(e));
   if (['svg', 'g', 'div', 'body'].includes(tagName.toLowerCase())) return ch;

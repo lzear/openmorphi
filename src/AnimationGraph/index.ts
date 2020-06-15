@@ -1,35 +1,35 @@
 import _ from 'lodash';
-import { OkEl } from '../components/getelems';
-import { ElementProps, getProps, animationObjectsFromPair } from './AniPath';
 import { line2pathR } from './Line';
 import { polyline2path, rect2polygon } from './Polyline';
 import { polygon2polyline } from './Polygon';
 import { circle2ellipse } from './Circle';
 import { ellipse2path } from './Ellipse';
+import { Attributes } from '../types';
+import { animationObjectsFromPair } from './SvgAnimate';
 
 interface AbstractElement {
-  props: ElementProps;
+  attributes: Attributes;
 }
 export interface ElementPath extends AbstractElement {
-  readonly type: 'path';
+  readonly tagName: 'path';
 }
 export interface ElementLine extends AbstractElement {
-  readonly type: 'line';
+  readonly tagName: 'line';
 }
 export interface ElementPolyline extends AbstractElement {
-  readonly type: 'polyline';
+  readonly tagName: 'polyline';
 }
 export interface ElementPolygon extends AbstractElement {
-  readonly type: 'polygon';
+  readonly tagName: 'polygon';
 }
 export interface ElementRect extends AbstractElement {
-  readonly type: 'rect';
+  readonly tagName: 'rect';
 }
 export interface ElementCircle extends AbstractElement {
-  readonly type: 'circle';
+  readonly tagName: 'circle';
 }
 export interface ElementEllipse extends AbstractElement {
-  readonly type: 'ellipse';
+  readonly tagName: 'ellipse';
 }
 
 export type MojiElement =
@@ -41,26 +41,16 @@ export type MojiElement =
   | ElementPolygon
   | ElementPolyline;
 
-export const toMojiElement = (e: OkEl): MojiElement => {
-  const props = getProps(e);
-  if (e.tagName === 'path') return { type: 'path', props };
-  if (e.tagName === 'line') return { type: 'line', props };
-  if (e.tagName === 'polyline') return { type: 'polyline', props };
-  if (e.tagName === 'polygon') return { type: 'polygon', props };
-  if (e.tagName === 'rect') return { type: 'rect', props };
-  if (e.tagName === 'ellipse') return { type: 'ellipse', props };
-  if (e.tagName === 'circle') return { type: 'circle', props };
-  throw Error(`missing E ${e.tagName}`);
-};
-
 export const derivedElements = (e: MojiElement): MojiElement[] => {
-  if (e.type === 'path') return [e];
-  if (e.type === 'line') return [e, line2pathR(e)];
-  if (e.type === 'polyline') return [e, ...derivedElements(polyline2path(e))];
-  if (e.type === 'polygon') return [e, ...derivedElements(polygon2polyline(e))];
-  if (e.type === 'rect') return [e, ...derivedElements(rect2polygon(e))];
-  if (e.type === 'ellipse') return [e, ...derivedElements(ellipse2path(e))];
-  if (e.type === 'circle') return [e, ...derivedElements(circle2ellipse(e))];
+  if (e.tagName === 'path') return [e];
+  if (e.tagName === 'line') return [e, line2pathR(e)];
+  if (e.tagName === 'polyline')
+    return [e, ...derivedElements(polyline2path(e))];
+  if (e.tagName === 'polygon')
+    return [e, ...derivedElements(polygon2polyline(e))];
+  if (e.tagName === 'rect') return [e, ...derivedElements(rect2polygon(e))];
+  if (e.tagName === 'ellipse') return [e, ...derivedElements(ellipse2path(e))];
+  if (e.tagName === 'circle') return [e, ...derivedElements(circle2ellipse(e))];
   throw Error(`missing element ${e}`);
 };
 
@@ -69,30 +59,35 @@ const convertAttrValuesForAnim = (
   attributeName: string,
 ) =>
   values.map((value) => {
-    if (['fill', 'stroke'].includes(attributeName) && value === 'none')
+    if (
+      ['fill', 'stroke'].includes(attributeName) &&
+      (!value || ['none'].includes(value))
+    )
       return 'transparent';
     return value;
   }) as [string | null, string | null];
 
-export const getAttrsForAnimE: (
-  propsA: ElementProps,
-  propsB: ElementProps,
-) => {
-  attributesConstant: ElementProps;
+export const splitAttributes = (
+  attributes1: Attributes,
+  attributes2: Attributes,
+): {
+  attributesConstant: Attributes;
   attributesToAnimate: { [atr: string]: [string | null, string | null] };
-} = (propsA: ElementProps, propsB: ElementProps) => {
-  const attributesA = Object.keys(propsA);
-  const attributesB = Object.keys(propsB);
-  const constantAttr = attributesA.filter((k) => propsB[k] === propsA[k]);
+} => {
+  const attributesA = Object.keys(attributes1);
+  const attributesB = Object.keys(attributes2);
+  const constantAttr = attributesA.filter(
+    (k) => attributes2[k] === attributes1[k],
+  );
   const attributesToAnimate = _.uniq([...attributesA, ...attributesB])
-    .filter((k) => propsB[k] !== propsA[k])
+    .filter((k) => attributes2[k] !== attributes1[k])
     .reduce(
       (
         prev: { [atr: string]: [string | null, string | null] },
         current: string,
       ) => ({
         ...prev,
-        [current]: [propsA[current], propsB[current]] as [
+        [current]: [attributes1[current], attributes2[current]] as [
           string | null,
           string | null,
         ],
@@ -100,22 +95,23 @@ export const getAttrsForAnimE: (
       {} as { [atr: string]: [string | null, string | null] },
     );
   return {
-    attributesConstant: _.pick(propsA, constantAttr),
+    attributesConstant: _.pick(attributes1, constantAttr),
     attributesToAnimate: _.mapValues(
       attributesToAnimate,
       convertAttrValuesForAnim,
     ),
   };
 };
+
 export const generateAnimationObjets = (
   mojiA: MojiElement,
   mojiB: MojiElement,
 ) => {
-  const derivedListA = derivedElements(mojiA);
-  const derivedListB = derivedElements(mojiB);
-  return derivedListA.flatMap((derivedA) =>
-    derivedListB
-      .filter((de2) => derivedA.type === de2.type)
+  const derivedElements1 = derivedElements(mojiA);
+  const derivedElements2 = derivedElements(mojiB);
+  return derivedElements1.flatMap((derivedA) =>
+    derivedElements2
+      .filter((de2) => derivedA.tagName === de2.tagName)
       .flatMap((derivedB) => {
         const {
           attributesConstant,

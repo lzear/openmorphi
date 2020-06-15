@@ -1,13 +1,13 @@
 import React from 'react';
-import { AnimationData } from '../views/CreateAnimation/AnimationPicker';
-import { Animated } from '../AnimationGraph/AniPath';
+import { Animated } from '../AnimationGraph/SvgAnimate';
 import styled from 'styled-components';
+import { AnimationElement } from '../types';
 
 const Divv = styled.div<{ width: number }>`
   width: ${({ width }) => width}px;
   height: ${({ width }) => width}px;
 `;
-const Animation: React.FC<{ anim: AnimationData; width: number }> = ({
+const Animation: React.FC<{ anim: AnimationElement; width: number }> = ({
   anim,
   width,
 }) => {

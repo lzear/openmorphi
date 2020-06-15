@@ -1,11 +1,11 @@
-query getAnimation (
+query findMorphByID (
     $id: ID!
 ) {
-    findAnimationByID (id: $id) {
+    findMorphByID (id: $id) {
         _id
         hexcode1
         hexcode2
-        html
+        data
         _ts
 
     }

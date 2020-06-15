@@ -1,20 +1,23 @@
 import React from 'react';
 import _ from 'lodash';
 import { animD } from './Path';
-import { getAttrsForAnimE, MojiElement } from '.';
+import { splitAttributes, MojiElement } from '.';
 import { adjustPointsLength } from './Poly';
-import { OkTags } from '../components/getelems';
-import { AnimationData } from '../views/CreateAnimation/AnimationPicker';
+import { AnimationData, Attributes, OkTagNames } from '../types';
 
-const attributeNameJSX = (key: string) =>
+const convertAttributeNameForJsx = (key: string) =>
   key.startsWith('data-') ? key : _.camelCase(key);
 
-export const getProps = (e: Element) => {
+const convertAttributesForJsx = <T extends any>(attributes: {
+  [key: string]: T;
+}) => _.mapKeys(attributes, (value, key) => convertAttributeNameForJsx(key));
+
+export const getAttributes = (e: Element) => {
   const attriis = e.getAttributeNames();
   return attriis.reduce(
     (prev, cur) => ({
       ...prev,
-      [attributeNameJSX(cur)]: e.getAttribute(cur),
+      [cur]: e.getAttribute(cur),
     }),
     {} as { [s: string]: string | null },
   );
@@ -27,54 +30,57 @@ const animateValues = (
 
 const Animate: React.FC<{
   attributeName: string;
-  speed: number;
+  spline: number;
   duration: number;
   values: [string | null, string | null];
-}> = ({ attributeName, values, speed, duration }) => (
+}> = ({ attributeName, values, spline, duration }) => (
   <animate
     attributeName={attributeName}
     dur={`${duration}ms`}
     repeatCount="indefinite"
     keyTimes="0;0.5;1"
     calcMode="spline"
-    keySplines={`${speed} 0 0 ${speed}; ${speed} 0 0 ${speed}`}
+    keySplines={`${spline} 0 0 ${spline}; ${spline} 0 0 ${spline}`}
     values={animateValues(attributeName, values)}
   />
 );
 
-export type ElementProps = { [atr: string]: string | null };
-
 export const Animated: React.FC<{
   animation: AnimationData;
-  speed?: number;
+  spline?: number;
   duration?: number;
 }> = ({
   animation: { tagName, attributesConstant, attributesToAnimate },
-  speed = 0.5,
+  spline = 0.5,
   duration = 5000,
-}) => {
-  return React.createElement(
+}) =>
+  React.createElement(
     tagName,
-    attributesConstant,
+    convertAttributesForJsx(attributesConstant),
     Object.keys(attributesToAnimate).map((atr) => (
       <Animate
         key={atr}
         attributeName={atr}
         values={attributesToAnimate[atr]}
         duration={duration}
-        speed={speed}
+        spline={spline}
       />
     )),
   );
-};
 
-export const DisplayE: React.FC<{ el: MojiElement }> = ({ el }) =>
-  React.createElement(el.type, el.props);
+export const DisplaySvgElement: React.FC<{ el: MojiElement }> = ({ el }) =>
+  React.createElement(el.tagName, convertAttributesForJsx(el.attributes));
 
-export const animationObjectsPath = (e1: ElementProps, e2: ElementProps) => {
-  const { attributesConstant, attributesToAnimate } = getAttrsForAnimE(e1, e2);
-  const d1 = e1.d;
-  const d2 = e2.d;
+export const animationObjectsPath = (
+  attributes1: Attributes,
+  attributes2: Attributes,
+) => {
+  const { attributesConstant, attributesToAnimate } = splitAttributes(
+    attributes1,
+    attributes2,
+  );
+  const d1 = attributes1.d;
+  const d2 = attributes2.d;
   const attributesToAnimateList: {
     [atr: string]: [string | null, string | null];
   }[] =
@@ -89,11 +95,11 @@ export const animationObjectsPath = (e1: ElementProps, e2: ElementProps) => {
 };
 
 export const animationObjectsSimple = (
-  tagName: OkTags,
-  e1: ElementProps,
-  e2: ElementProps,
+  tagName: OkTagNames,
+  e1: Attributes,
+  e2: Attributes,
 ) => {
-  const { attributesConstant, attributesToAnimate } = getAttrsForAnimE(e1, e2);
+  const { attributesConstant, attributesToAnimate } = splitAttributes(e1, e2);
   const attributesToAnimateList: {
     [atr: string]: [string | null, string | null];
   }[] = [attributesToAnimate];
@@ -104,11 +110,8 @@ export const animationObjectsSimple = (
   };
 };
 
-export const animationObjectsPolyline = (
-  e1: ElementProps,
-  e2: ElementProps,
-) => {
-  const { attributesConstant, attributesToAnimate } = getAttrsForAnimE(e1, e2);
+export const animationObjectsPolyline = (e1: Attributes, e2: Attributes) => {
+  const { attributesConstant, attributesToAnimate } = splitAttributes(e1, e2);
   const p1 = e1.points;
   const p2 = e2.points;
   const toAnimateList: { [atr: string]: [string | null, string | null] }[] =
@@ -126,16 +129,19 @@ export const animationObjectsPolyline = (
 };
 
 export const animationObjectsPolygon = (
-  e1: ElementProps,
-  e2: ElementProps,
+  attributes1: Attributes,
+  attributes2: Attributes,
 ): {
-  attributesConstant: ElementProps;
+  attributesConstant: Attributes;
   attributesToAnimateList: { [p: string]: [string | null, string | null] }[];
   tagName: 'polygon';
 } => {
-  const { attributesToAnimate, attributesConstant } = getAttrsForAnimE(e1, e2);
-  const p1 = e1.points;
-  const p2 = e2.points;
+  const { attributesToAnimate, attributesConstant } = splitAttributes(
+    attributes1,
+    attributes2,
+  );
+  const p1 = attributes1.points;
+  const p2 = attributes2.points;
   const attributesToAnimateList: {
     [atr: string]: [string | null, string | null];
   }[] =
@@ -152,16 +158,18 @@ export const animationObjectsFromPair = (
   e1: MojiElement,
   e2: MojiElement,
 ): {
-  attributesConstant: ElementProps;
+  attributesConstant: Attributes;
   attributesToAnimateList: { [p: string]: [string | null, string | null] }[];
-  tagName: OkTags;
+  tagName: OkTagNames;
 } => {
-  if (e1.type !== e2.type) throw Error('non matching svgelem type');
-  if (e1.type === 'polygon') return animationObjectsPolygon(e1.props, e2.props);
-  if (e1.type === 'polyline')
-    return animationObjectsPolyline(e1.props, e2.props);
-  if (e1.type === 'path') return animationObjectsPath(e1.props, e2.props);
-  if (['ellipse', 'circle', 'rect', 'line'].includes(e1.type))
-    return animationObjectsSimple(e1.type, e1.props, e2.props);
+  if (e1.tagName !== e2.tagName) throw Error('non matching svgelem type');
+  if (e1.tagName === 'polygon')
+    return animationObjectsPolygon(e1.attributes, e2.attributes);
+  if (e1.tagName === 'polyline')
+    return animationObjectsPolyline(e1.attributes, e2.attributes);
+  if (e1.tagName === 'path')
+    return animationObjectsPath(e1.attributes, e2.attributes);
+  if (['ellipse', 'circle', 'rect', 'line'].includes(e1.tagName))
+    return animationObjectsSimple(e1.tagName, e1.attributes, e2.attributes);
   throw Error('non matching svgelem type');
 };

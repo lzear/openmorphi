@@ -5,16 +5,16 @@ import {
   ElementRect,
 } from './index';
 
-export const polyline2path = (line: ElementPolyline) => {
-  const { points, ...props } = line.props;
+export const polyline2path = (line: ElementPolyline): ElementPath => {
+  const { points, ...props } = line.attributes;
   return {
-    type: 'path',
-    props: { ...props, d: `M${points}` },
-  } as ElementPath;
+    tagName: 'path',
+    attributes: { ...props, d: `M${points}` },
+  };
 };
 
-export const rect2polygons = (rect: ElementRect) => {
-  const { x, y, height, width, ...props } = rect.props;
+export const rect2polygons = (rect: ElementRect): ElementPolygon[] => {
+  const { x, y, height, width, ...props } = rect.attributes;
   const x1 = Number(x);
   const x2 = x1 + Number(width);
   const y1 = Number(y);
@@ -23,25 +23,25 @@ export const rect2polygons = (rect: ElementRect) => {
   const points2 = [x1, y1, x1, y2, x2, y2, x2, y1, x1, y1].join(' ');
   return [
     {
-      type: 'polygon',
-      props: { ...props, points: points1 },
+      tagName: 'polygon',
+      attributes: { ...props, points: points1 },
     },
     {
-      type: 'polygon',
-      props: { ...props, points: points2 },
+      tagName: 'polygon',
+      attributes: { ...props, points: points2 },
     },
-  ] as ElementPolygon[];
+  ];
 };
 
-export const rect2polygon = (rect: ElementRect) => {
-  const { x, y, height, width, ...props } = rect.props;
+export const rect2polygon = (rect: ElementRect): ElementPolygon => {
+  const { x, y, height, width, ...props } = rect.attributes;
   const x1 = Number(x);
   const x2 = x1 + Number(width);
   const y1 = Number(y);
   const y2 = y1 + Number(height);
   const points = [x1, y1, x2, y1, x2, y2, x1, y2, x1, y1].join(' ');
   return {
-    type: 'polygon',
-    props: { ...props, points },
-  } as ElementPolygon;
+    tagName: 'polygon',
+    attributes: { ...props, points },
+  };
 };
