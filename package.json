@@ -44,7 +44,7 @@
     "react-sortable-hoc": "^1.11.0",
     "react-svg": "^11.0.26",
     "source-map-explorer": "^2.4.2",
-    "styled-components": "^5.1.1",
+    "styled-components": "^5.2.1",
     "svg-arc-to-cubic-bezier": "^3.2.0",
     "svg-path-reverse": "^1.1.1",
     "typescript": "~3.9.5"
