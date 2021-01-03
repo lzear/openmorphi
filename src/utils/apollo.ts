@@ -1,8 +1,22 @@
-import ApolloClient from 'apollo-boost';
+import {
+  ApolloLink,
+  ApolloClient,
+  HttpLink,
+  InMemoryCache,
+} from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
 
 export const client = new ApolloClient({
-  headers: {
-    Authorization: `Bearer ${process.env.REACT_APP_FAUNADB_SECRET}`,
-  },
-  uri: 'https://graphql.fauna.com/graphql',
-});
+  link: ApolloLink.from([
+    setContext((_, { headers }) => ({
+      headers: {
+        ...headers,
+        authorization: `Bearer ${process.env.REACT_APP_FAUNADB_SECRET}`,
+      },
+    })),
+    new HttpLink({
+      uri: 'https://graphql.fauna.com/graphql',
+    }),
+  ]),
+  cache: new InMemoryCache(),
+})
