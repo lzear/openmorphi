@@ -1,22 +1,22 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useFindMorphByIdQuery } from '../generated/graphql';
-import Spinner from '../components/Spinner';
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { useFindMorphByIdQuery } from '../generated/graphql'
+import Spinner from '../components/Spinner'
 import {
   ViewAnimationElements,
   AnimationPreview,
-} from './CreateAnimation/FinalRender';
-import { MorphData } from '../fauna';
-import { validate } from '../utils/svgsanitize';
+} from './CreateAnimation/FinalRender'
+import { MorphData } from '../fauna'
+import { validate } from '../utils/svgsanitize'
 
 const OneAnimation: React.FC<{ id: string }> = ({ id }) => {
-  const { loading, error, data } = useFindMorphByIdQuery({ variables: { id } });
-  const animation = data?.findMorphByID;
-  let content = null;
-  if (loading) content = <Spinner />;
-  if (error) content = <p>Error</p>;
+  const { loading, error, data } = useFindMorphByIdQuery({ variables: { id } })
+  const animation = data?.findMorphByID
+  let content = null
+  if (loading) content = <Spinner />
+  if (error) content = <p>Error</p>
   if (animation) {
-    const morph: MorphData = JSON.parse(animation.data);
+    const morph: MorphData = JSON.parse(animation.data)
     if (validate(morph))
       content = (
         <AnimationPreview>
@@ -26,7 +26,7 @@ const OneAnimation: React.FC<{ id: string }> = ({ id }) => {
             spline={morph.spline}
           />
         </AnimationPreview>
-      );
+      )
   }
   return (
     <div>
@@ -35,7 +35,7 @@ const OneAnimation: React.FC<{ id: string }> = ({ id }) => {
       </div>
       {content}
     </div>
-  );
-};
+  )
+}
 
-export default OneAnimation;
+export default OneAnimation

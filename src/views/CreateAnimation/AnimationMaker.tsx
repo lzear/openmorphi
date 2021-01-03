@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { MojiElem } from './Side';
-import SvgChildrenPicker from '../../components/SvgChildrenPicker';
-import AnimationPicker from './AnimationPicker';
-import AnimationList from './AnimationsTable';
-import styled from 'styled-components';
-import 'rc-slider/assets/index.css';
-import FinalRender from './FinalRender';
-import { H3 } from '../../components/Styled';
-import { AnimationElement } from '../../types';
+import React, { useState } from 'react'
+import { MojiElem } from './Side'
+import SvgChildrenPicker from '../../components/SvgChildrenPicker'
+import AnimationPicker from './AnimationPicker'
+import AnimationList from './AnimationsTable'
+import styled from 'styled-components'
+import 'rc-slider/assets/index.css'
+import FinalRender from './FinalRender'
+import { H3 } from '../../components/Styled'
+import { AnimationElement } from '../../types'
 
 export const LastStep = styled.div`
   display: flex;
-`;
+`
 
-export const randomString = () => `s${Math.random().toString(36).substring(7)}`;
+export const randomString = () => `s${Math.random().toString(36).substring(7)}`
 
 const countMojiElementUsages = (
   animationElements: AnimationElement[],
@@ -25,22 +25,22 @@ const countMojiElementUsages = (
       [cur[key] as number]: (prev[cur[key]] || 0) + 1,
     }),
     {} as { [idx: number]: number },
-  );
+  )
 
 const AnimationMaker: React.FC<{
-  svg1: { hex: string; svg: string };
-  svg2: { hex: string; svg: string };
+  svg1: { hex: string; svg: string }
+  svg2: { hex: string; svg: string }
 }> = ({ svg1, svg2 }) => {
-  const [selectedElement1, selectElement1] = useState<MojiElem | null>(null);
-  const [selectedElement2, selectElement2] = useState<MojiElem | null>(null);
-  const [animations, setAnimations] = useState<AnimationElement[]>([]);
+  const [selectedElement1, selectElement1] = useState<MojiElem | null>(null)
+  const [selectedElement2, selectElement2] = useState<MojiElem | null>(null)
+  const [animations, setAnimations] = useState<AnimationElement[]>([])
   const counts: {
-    a: { [p: number]: number };
-    b: { [p: number]: number };
+    a: { [p: number]: number }
+    b: { [p: number]: number }
   } = {
     a: countMojiElementUsages(animations, 'idx1'),
     b: countMojiElementUsages(animations, 'idx2'),
-  };
+  }
   return (
     <>
       <H3>2. Select pairs of elements to animate</H3>
@@ -98,7 +98,7 @@ const AnimationMaker: React.FC<{
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default AnimationMaker;
+export default AnimationMaker

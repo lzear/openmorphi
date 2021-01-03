@@ -1,10 +1,10 @@
-import React from 'react';
-import styled from 'styled-components';
-import { MojiElement } from '../AnimationGraph';
-import { DisplaySvgElement } from '../AnimationGraph/SvgAnimate';
+import React from 'react'
+import styled from 'styled-components'
+import { MojiElement } from '../AnimationGraph'
+import { DisplaySvgElement } from '../AnimationGraph/SvgAnimate'
 
 const SvgContainer = styled.div<{
-  selected: boolean;
+  selected: boolean
 }>`
   cursor: pointer;
   width: 85px;
@@ -12,14 +12,14 @@ const SvgContainer = styled.div<{
   border: 1px solid lightgray;
   outline: ${({ selected }) =>
     selected ? '3px solid gray' : '3px solid transparent'};
-`;
+`
 const FlexContainer = styled.div`
   display: flex;
   min-width: 100px;
   flex: 1 1 auto;
   flex-wrap: wrap;
   border: 1px solid lightgray;
-`;
+`
 const Checkered = styled.div`
   background: linear-gradient(
       45deg,
@@ -46,12 +46,12 @@ const Checkered = styled.div`
   background-size: 10px 10px, 10px 10px;
   transition: none;
   transform: scaleX(1) scaleY(1) scaleZ(1);
-`;
+`
 const SvgElements: React.FC<{
-  els: MojiElement[];
-  select: (el: MojiElement, k: number) => void;
-  selected: number | undefined;
-  counts: { [p: number]: number };
+  els: MojiElement[]
+  select: (el: MojiElement, k: number) => void
+  selected: number | undefined
+  counts: { [p: number]: number }
 }> = ({ els, select, selected, counts }) => (
   <FlexContainer>
     {els.map((e, k) => (
@@ -80,6 +80,6 @@ const SvgElements: React.FC<{
       </SvgContainer>
     ))}
   </FlexContainer>
-);
+)
 
-export default SvgElements;
+export default SvgElements

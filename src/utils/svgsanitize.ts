@@ -1,5 +1,5 @@
-import { MorphData } from '../fauna';
-import _ from 'lodash';
+import { MorphData } from '../fauna'
+import _ from 'lodash'
 
 const presentationAttributes = [
   'alignment-baseline',
@@ -65,15 +65,15 @@ const presentationAttributes = [
   'visibility',
   'word-spacing',
   'writing-mode',
-];
-const pathAttributes = ['d', 'pathLength'];
-const polygonAttributes = ['points', 'pathLength'];
-const lineAttributes = ['x1', 'x2', 'y1', 'y2'];
-const circleAttributes = ['cx', 'cy', 'r'];
-const ellipseAttributes = ['cx', 'cy', 'rx', 'ry'];
-const rectAttributes = ['x', 'y', 'width', 'height', 'rx', 'ry'];
+]
+const pathAttributes = ['d', 'pathLength']
+const polygonAttributes = ['points', 'pathLength']
+const lineAttributes = ['x1', 'x2', 'y1', 'y2']
+const circleAttributes = ['cx', 'cy', 'r']
+const ellipseAttributes = ['cx', 'cy', 'rx', 'ry']
+const rectAttributes = ['x', 'y', 'width', 'height', 'rx', 'ry']
 
-const validAttributes = _.uniq([
+export const validAttributes = _.uniq([
   ...presentationAttributes,
   ...pathAttributes,
   ...polygonAttributes,
@@ -81,17 +81,17 @@ const validAttributes = _.uniq([
   ...ellipseAttributes,
   ...rectAttributes,
   ...lineAttributes,
-]);
+])
 
 export const validate = (morph: MorphData) => {
   morph.svgElements.forEach((animationElement) => {
-    [
+    ;[
       ...Object.keys(animationElement.attributesConstant),
       ...Object.keys(animationElement.attributesToAnimate),
     ].forEach((attributeName) => {
       if (!validAttributes.includes(attributeName))
-        throw new Error('invalid attribute name: ' + attributeName);
-    });
-  });
-  return true;
-};
+        throw new Error('invalid attribute name: ' + attributeName)
+    })
+  })
+  return true
+}

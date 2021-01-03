@@ -1,7 +1,9 @@
-import gql from 'graphql-tag';
-import * as ApolloReactCommon from '@apollo/react-common';
-import * as ApolloReactHooks from '@apollo/react-hooks';
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -21,7 +23,7 @@ export type Scalars = {
 
 
 export type Animation = {
-   __typename?: 'Animation';
+  __typename?: 'Animation';
   _id: Scalars['ID'];
   html: Scalars['String'];
   hexcode1: Scalars['String'];
@@ -36,7 +38,7 @@ export type AnimationInput = {
 };
 
 export type AnimationPage = {
-   __typename?: 'AnimationPage';
+  __typename?: 'AnimationPage';
   data: Array<Maybe<Animation>>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
@@ -45,7 +47,7 @@ export type AnimationPage = {
 
 
 export type Morph = {
-   __typename?: 'Morph';
+  __typename?: 'Morph';
   _id: Scalars['ID'];
   data: Scalars['String'];
   hexcode1: Scalars['String'];
@@ -60,14 +62,14 @@ export type MorphInput = {
 };
 
 export type MorphPage = {
-   __typename?: 'MorphPage';
+  __typename?: 'MorphPage';
   data: Array<Maybe<Morph>>;
   after?: Maybe<Scalars['String']>;
   before?: Maybe<Scalars['String']>;
 };
 
 export type Mutation = {
-   __typename?: 'Mutation';
+  __typename?: 'Mutation';
   createMorph: Morph;
   createAnimation: Animation;
   updateMorph?: Maybe<Morph>;
@@ -109,7 +111,7 @@ export type MutationDeleteAnimationArgs = {
 };
 
 export type Query = {
-   __typename?: 'Query';
+  __typename?: 'Query';
   sayHello: Scalars['String'];
   morphs: MorphPage;
   findMorphByID?: Maybe<Morph>;
@@ -140,11 +142,11 @@ export type QueryFindAnimationByIdArgs = {
 };
 
 
-export type CreateMorphMutationVariables = {
+export type CreateMorphMutationVariables = Exact<{
   hexcode1: Scalars['String'];
   hexcode2: Scalars['String'];
   data: Scalars['String'];
-};
+}>;
 
 
 export type CreateMorphMutation = (
@@ -155,9 +157,9 @@ export type CreateMorphMutation = (
   ) }
 );
 
-export type FindMorphByIdQueryVariables = {
+export type FindMorphByIdQueryVariables = Exact<{
   id: Scalars['ID'];
-};
+}>;
 
 
 export type FindMorphByIdQuery = (
@@ -168,10 +170,10 @@ export type FindMorphByIdQuery = (
   )> }
 );
 
-export type MorphsQueryVariables = {
+export type MorphsQueryVariables = Exact<{
   size?: Maybe<Scalars['Int']>;
   cursor?: Maybe<Scalars['String']>;
-};
+}>;
 
 
 export type MorphsQuery = (
@@ -198,7 +200,7 @@ export const CreateMorphDocument = gql`
   }
 }
     `;
-export type CreateMorphMutationFn = ApolloReactCommon.MutationFunction<CreateMorphMutation, CreateMorphMutationVariables>;
+export type CreateMorphMutationFn = Apollo.MutationFunction<CreateMorphMutation, CreateMorphMutationVariables>;
 
 /**
  * __useCreateMorphMutation__
@@ -219,12 +221,12 @@ export type CreateMorphMutationFn = ApolloReactCommon.MutationFunction<CreateMor
  *   },
  * });
  */
-export function useCreateMorphMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<CreateMorphMutation, CreateMorphMutationVariables>) {
-        return ApolloReactHooks.useMutation<CreateMorphMutation, CreateMorphMutationVariables>(CreateMorphDocument, baseOptions);
+export function useCreateMorphMutation(baseOptions?: Apollo.MutationHookOptions<CreateMorphMutation, CreateMorphMutationVariables>) {
+        return Apollo.useMutation<CreateMorphMutation, CreateMorphMutationVariables>(CreateMorphDocument, baseOptions);
       }
 export type CreateMorphMutationHookResult = ReturnType<typeof useCreateMorphMutation>;
-export type CreateMorphMutationResult = ApolloReactCommon.MutationResult<CreateMorphMutation>;
-export type CreateMorphMutationOptions = ApolloReactCommon.BaseMutationOptions<CreateMorphMutation, CreateMorphMutationVariables>;
+export type CreateMorphMutationResult = Apollo.MutationResult<CreateMorphMutation>;
+export type CreateMorphMutationOptions = Apollo.BaseMutationOptions<CreateMorphMutation, CreateMorphMutationVariables>;
 export const FindMorphByIdDocument = gql`
     query findMorphByID($id: ID!) {
   findMorphByID(id: $id) {
@@ -253,15 +255,15 @@ export const FindMorphByIdDocument = gql`
  *   },
  * });
  */
-export function useFindMorphByIdQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<FindMorphByIdQuery, FindMorphByIdQueryVariables>) {
-        return ApolloReactHooks.useQuery<FindMorphByIdQuery, FindMorphByIdQueryVariables>(FindMorphByIdDocument, baseOptions);
+export function useFindMorphByIdQuery(baseOptions: Apollo.QueryHookOptions<FindMorphByIdQuery, FindMorphByIdQueryVariables>) {
+        return Apollo.useQuery<FindMorphByIdQuery, FindMorphByIdQueryVariables>(FindMorphByIdDocument, baseOptions);
       }
-export function useFindMorphByIdLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<FindMorphByIdQuery, FindMorphByIdQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<FindMorphByIdQuery, FindMorphByIdQueryVariables>(FindMorphByIdDocument, baseOptions);
+export function useFindMorphByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<FindMorphByIdQuery, FindMorphByIdQueryVariables>) {
+          return Apollo.useLazyQuery<FindMorphByIdQuery, FindMorphByIdQueryVariables>(FindMorphByIdDocument, baseOptions);
         }
 export type FindMorphByIdQueryHookResult = ReturnType<typeof useFindMorphByIdQuery>;
 export type FindMorphByIdLazyQueryHookResult = ReturnType<typeof useFindMorphByIdLazyQuery>;
-export type FindMorphByIdQueryResult = ApolloReactCommon.QueryResult<FindMorphByIdQuery, FindMorphByIdQueryVariables>;
+export type FindMorphByIdQueryResult = Apollo.QueryResult<FindMorphByIdQuery, FindMorphByIdQueryVariables>;
 export const MorphsDocument = gql`
     query morphs($size: Int, $cursor: String) {
   morphs(_size: $size, _cursor: $cursor) {
@@ -295,31 +297,23 @@ export const MorphsDocument = gql`
  *   },
  * });
  */
-export function useMorphsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MorphsQuery, MorphsQueryVariables>) {
-        return ApolloReactHooks.useQuery<MorphsQuery, MorphsQueryVariables>(MorphsDocument, baseOptions);
+export function useMorphsQuery(baseOptions?: Apollo.QueryHookOptions<MorphsQuery, MorphsQueryVariables>) {
+        return Apollo.useQuery<MorphsQuery, MorphsQueryVariables>(MorphsDocument, baseOptions);
       }
-export function useMorphsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MorphsQuery, MorphsQueryVariables>) {
-          return ApolloReactHooks.useLazyQuery<MorphsQuery, MorphsQueryVariables>(MorphsDocument, baseOptions);
+export function useMorphsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<MorphsQuery, MorphsQueryVariables>) {
+          return Apollo.useLazyQuery<MorphsQuery, MorphsQueryVariables>(MorphsDocument, baseOptions);
         }
 export type MorphsQueryHookResult = ReturnType<typeof useMorphsQuery>;
 export type MorphsLazyQueryHookResult = ReturnType<typeof useMorphsLazyQuery>;
-export type MorphsQueryResult = ApolloReactCommon.QueryResult<MorphsQuery, MorphsQueryVariables>;
+export type MorphsQueryResult = Apollo.QueryResult<MorphsQuery, MorphsQueryVariables>;
 
-      export interface IntrospectionResultData {
-        __schema: {
-          types: {
-            kind: string;
-            name: string;
-            possibleTypes: {
-              name: string;
-            }[];
-          }[];
-        };
+      export interface PossibleTypesResultData {
+        possibleTypes: {
+          [key: string]: string[]
+        }
       }
-      const result: IntrospectionResultData = {
-  "__schema": {
-    "types": []
-  }
+      const result: PossibleTypesResultData = {
+  "possibleTypes": {}
 };
       export default result;
     

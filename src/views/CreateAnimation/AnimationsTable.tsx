@@ -1,43 +1,43 @@
-import React, { SetStateAction, Dispatch } from 'react';
-import arrayMove from 'array-move';
+import React, { SetStateAction, Dispatch } from 'react'
+import arrayMove from 'array-move'
 
-import { SortableContainer, SortableElement } from 'react-sortable-hoc';
-import { DeleteOutlined } from '@ant-design/icons';
-import Animation from '../../components/Animation';
-import styled from 'styled-components';
-import { AnimationElement } from '../../types';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc'
+import { DeleteOutlined } from '@ant-design/icons'
+import Animation from '../../components/Animation'
+import styled from 'styled-components'
+import { AnimationElement } from '../../types'
 
 const Container = styled.div`
   margin: 5px;
-`;
+`
 const Element = styled.div`
   margin: 5px;
   cursor: pointer;
   // display: inline-block;
-`;
+`
 
-type Reversed = AnimationElement & { i: number };
+type Reversed = AnimationElement & { i: number }
 
 const SList = ({
   items,
   del,
 }: {
-  items: Reversed[];
-  del: (id: string) => void;
+  items: Reversed[]
+  del: (id: string) => void
 }) => (
   <ul>
     {items.map((value, index) => (
       <SortableItem key={value.id} index={index} value={value} del={del} />
     ))}
   </ul>
-);
+)
 
 const SEl = ({
   value,
   del,
 }: {
-  value: Reversed;
-  del: (id: string) => void;
+  value: Reversed
+  del: (id: string) => void
 }) => (
   <Element key={value.id}>
     <button style={{ position: 'absolute' }} onClick={() => del(value.id)}>
@@ -45,24 +45,22 @@ const SEl = ({
     </button>
     <Animation anim={value} width={80} />
   </Element>
-);
+)
 
 const SortableItem = SortableElement<{
-  value: Reversed;
-  del: (id: string) => void;
-}>(SEl);
+  value: Reversed
+  del: (id: string) => void
+}>(SEl)
 
 const AnimationList: React.FC<{
-  animations: AnimationElement[];
-  setAnimations: Dispatch<SetStateAction<AnimationElement[]>>;
+  animations: AnimationElement[]
+  setAnimations: Dispatch<SetStateAction<AnimationElement[]>>
 }> = ({ animations, setAnimations }) => {
-  const reversed: Reversed[] = animations
-    .map((a, i) => ({ ...a, i }))
-    .reverse();
+  const reversed: Reversed[] = animations.map((a, i) => ({ ...a, i })).reverse()
   const S = SortableContainer<{
-    items: Reversed[];
-    del: (id: string) => void;
-  }>(SList);
+    items: Reversed[]
+    del: (id: string) => void
+  }>(SList)
   return (
     <Container>
       <S
@@ -77,7 +75,7 @@ const AnimationList: React.FC<{
         }
       />
     </Container>
-  );
-};
+  )
+}
 
-export default AnimationList;
+export default AnimationList

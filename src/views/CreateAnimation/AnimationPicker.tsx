@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import { generateAnimationObjets } from '../../AnimationGraph';
-import { MojiElem } from './Side';
-import { Animated } from '../../AnimationGraph/SvgAnimate';
-import { AnimationData } from '../../types';
+import React from 'react'
+import styled from 'styled-components'
+import { generateAnimationObjets } from '../../AnimationGraph'
+import { MojiElem } from './Side'
+import { Animated } from '../../AnimationGraph/SvgAnimate'
+import { AnimationData } from '../../types'
 
 export const SvgPreview = styled.div`
   width: 130px;
@@ -36,12 +36,12 @@ export const SvgPreview = styled.div`
   background-size: 10px 10px, 10px 10px;
   transition: none;
   transform: scaleX(1) scaleY(1) scaleZ(1);
-`;
+`
 
 const AnimationPicker: React.FC<{
-  el1: MojiElem;
-  el2: MojiElem;
-  select: (a: AnimationData) => void;
+  el1: MojiElem
+  el2: MojiElem
+  select: (a: AnimationData) => void
 }> = ({ el1, el2, select }) => (
   <>
     {generateAnimationObjets(el1.el, el2.el)?.map(
@@ -58,6 +58,6 @@ const AnimationPicker: React.FC<{
       ),
     )}
   </>
-);
+)
 
-export default AnimationPicker;
+export default AnimationPicker

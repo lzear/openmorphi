@@ -1,12 +1,12 @@
-import React from 'react';
-import { Animated } from '../AnimationGraph/SvgAnimate';
-import styled from 'styled-components';
-import { AnimationElement } from '../types';
+import React from 'react'
+import { Animated } from '../AnimationGraph/SvgAnimate'
+import styled from 'styled-components'
+import { AnimationElement } from '../types'
 
 const Divv = styled.div<{ width: number }>`
   width: ${({ width }) => width}px;
   height: ${({ width }) => width}px;
-`;
+`
 const Animation: React.FC<{ anim: AnimationElement; width: number }> = ({
   anim,
   width,
@@ -17,7 +17,7 @@ const Animation: React.FC<{ anim: AnimationElement; width: number }> = ({
         <Animated animation={anim} />
       </svg>
     </Divv>
-  );
-};
+  )
+}
 
-export default Animation;
+export default Animation

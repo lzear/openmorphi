@@ -1,16 +1,16 @@
-import React from 'react';
-import { useRedir, useMojiHtml } from './useRedir';
-import AnimationMaker from './views/CreateAnimation/AnimationMaker';
-import Emojinput from './components/Emojinput';
-import Spinner from './components/Spinner';
-import { Link } from 'react-router-dom';
-import { H2, H3 } from './components/Styled';
-import InitialSvg from './components/InitialSvg';
+import React from 'react'
+import { useRedir, useMojiHtml } from './useRedir'
+import AnimationMaker from './views/CreateAnimation/AnimationMaker'
+import Emojinput from './components/Emojinput'
+import Spinner from './components/Spinner'
+import { Link } from 'react-router-dom'
+import { H2, H3 } from './components/Styled'
+import InitialSvg from './components/InitialSvg'
 
 const App: React.FC = () => {
-  useRedir();
-  const svg1 = useMojiHtml('a');
-  const svg2 = useMojiHtml('b');
+  useRedir()
+  const svg1 = useMojiHtml('a')
+  const svg2 = useMojiHtml('b')
   return (
     <>
       <p>
@@ -42,7 +42,7 @@ const App: React.FC = () => {
         <Spinner />
       )}
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
