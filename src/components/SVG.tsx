@@ -1,6 +1,6 @@
-import React from 'react';
-import DOMPurify from 'dompurify';
-import Spinner from './Spinner';
+import React from 'react'
+import DOMPurify from 'dompurify'
+import Spinner from './Spinner'
 
 const SVG: React.FC<{ svg: string | null }> = ({ svg }) =>
   svg ? (
@@ -14,6 +14,6 @@ const SVG: React.FC<{ svg: string | null }> = ({ svg }) =>
     />
   ) : (
     <Spinner />
-  );
+  )
 
-export default SVG;
+export default SVG

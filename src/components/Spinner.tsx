@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled, { keyframes } from 'styled-components'
 
 const rotate = keyframes`
   from {
@@ -8,7 +8,7 @@ const rotate = keyframes`
   to {
     transform: rotate(360deg);
   }
-`;
+`
 
 export default styled.div`
   display: inline-block;
@@ -19,4 +19,4 @@ export default styled.div`
   border-right-color: transparent;
   border-radius: 50%;
   animation: ${rotate} 2s linear infinite;
-`;
+`

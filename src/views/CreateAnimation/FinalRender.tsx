@@ -1,33 +1,33 @@
-import React, { useRef, useContext } from 'react';
-import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import { History } from 'history';
-import Slider from 'rc-slider';
-import { Animated } from '../../AnimationGraph/SvgAnimate';
-import { SpeedContext } from './SpeedContext';
-import { useCreateMorphMutation } from '../../generated/graphql';
-import { AnimationElement } from '../../types';
-import { MorphData } from '../../fauna';
-import { validate } from '../../utils/svgsanitize';
+import React, { useRef, useContext } from 'react'
+import styled from 'styled-components'
+import { useHistory } from 'react-router-dom'
+import { History } from 'history'
+import Slider from 'rc-slider'
+import { Animated } from '../../AnimationGraph/SvgAnimate'
+import { SpeedContext } from './SpeedContext'
+import { useCreateMorphMutation } from '../../generated/graphql'
+import { AnimationElement } from '../../types'
+import { MorphData } from '../../fauna'
+import { validate } from '../../utils/svgsanitize'
 
 interface Interface {
-  readonly widthA?: number;
+  readonly widthA?: number
 }
 export const AnimationPreview = styled.div<Interface>`
   width: ${({ widthA }) => widthA || 300}px;
   height: ${({ widthA }) => widthA || 300}px;
   margin: 3px;
   border: 1px solid black;
-`;
+`
 
 export const ViewAnimationElements = ({
   animations,
   spline,
   duration,
 }: {
-  animations: AnimationElement[];
-  spline: number;
-  duration: number;
+  animations: AnimationElement[]
+  spline: number
+  duration: number
 }) => (
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72">
     {animations.map((animation, k) => (
@@ -39,21 +39,21 @@ export const ViewAnimationElements = ({
       />
     ))}
   </svg>
-);
+)
 
 const FinalRender: React.FC<{
-  animations: AnimationElement[];
+  animations: AnimationElement[]
   // morphi: MorphData;
-  hexcode1: string;
-  hexcode2: string;
-  width?: number;
+  hexcode1: string
+  hexcode2: string
+  width?: number
 }> = ({ animations, hexcode1, hexcode2, width = 300 }) => {
-  const { splineTuple, durationTuple } = useContext(SpeedContext);
+  const { splineTuple, durationTuple } = useContext(SpeedContext)
 
-  const [save] = useCreateMorphMutation();
-  const ref = useRef<HTMLDivElement | null>(null);
+  const [save] = useCreateMorphMutation()
+  const ref = useRef<HTMLDivElement | null>(null)
 
-  const history: History = useHistory();
+  const history: History = useHistory()
   return (
     <div>
       <AnimationPreview ref={ref} widthA={width}>
@@ -91,12 +91,12 @@ const FinalRender: React.FC<{
           <br />
           <button
             onClick={() => {
-              if (!ref.current) return;
+              if (!ref.current) return
               const morphi: MorphData = {
                 spline: splineTuple[0],
                 duration: durationTuple[0],
                 svgElements: animations,
-              };
+              }
               if (validate(morphi))
                 return save({
                   variables: {
@@ -105,10 +105,10 @@ const FinalRender: React.FC<{
                     hexcode2: hexcode2,
                   },
                   update: (a, b) => {
-                    const id = b.data?.createMorph._id;
-                    if (id) history.replace(`/animations?id=${id}`);
+                    const id = b.data?.createMorph._id
+                    if (id) history.replace(`/animations?id=${id}`)
                   },
-                });
+                })
             }}
           >
             Save it!
@@ -116,7 +116,7 @@ const FinalRender: React.FC<{
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default FinalRender;
+export default FinalRender

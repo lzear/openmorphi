@@ -1,12 +1,12 @@
-import { MojiElement } from '../AnimationGraph';
-import { OkTagNames } from '../types';
-import { getAttributes } from '../AnimationGraph/SvgAnimate';
+import { MojiElement } from '../AnimationGraph'
+import { OkTagNames } from '../types'
+import { getAttributes } from '../AnimationGraph/SvgAnimate'
 
 export function flatMap<T, U>(
   array: T[],
   callbackfn: (value: T, index: number, array: T[]) => U[],
 ): U[] {
-  return Array.prototype.concat(...array.map(callbackfn));
+  return Array.prototype.concat(...array.map(callbackfn))
 }
 
 const okTags = [
@@ -17,16 +17,23 @@ const okTags = [
   'polyline',
   'rect',
   'polygon',
-];
+]
 
 const explore = (el: Element): MojiElement[] => {
-  const { tagName } = el;
+  const { tagName } = el
   if (okTags.includes(tagName.toLowerCase()))
-    return [{ tagName: tagName as OkTagNames, attributes: getAttributes(el) }];
-  if (['defs', 'use', 'clippath'].includes(tagName.toLowerCase())) return [];
-  const ch = flatMap(Array.from(el.children), (e: Element) => explore(e));
-  if (['svg', 'g', 'div', 'body'].includes(tagName.toLowerCase())) return ch;
-  throw new Error(`unhandled type ${tagName}`);
-};
+    return [
+      {
+        tagName: tagName as OkTagNames,
+        attributes: getAttributes(el),
+        transformationList: [],
+        transformationCost: 0,
+      },
+    ]
+  if (['defs', 'use', 'clippath'].includes(tagName.toLowerCase())) return []
+  const ch = flatMap(Array.from(el.children), (e: Element) => explore(e))
+  if (['svg', 'g', 'div', 'body'].includes(tagName.toLowerCase())) return ch
+  throw new Error(`unhandled type ${tagName}`)
+}
 
-export default explore;
+export default explore
