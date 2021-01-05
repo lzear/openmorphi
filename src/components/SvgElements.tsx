@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { MojiElement } from '../AnimationGraph'
+import { Shape } from '../AnimationGraph'
 import { DisplaySvgElement } from '../AnimationGraph/SvgAnimate'
 
 const SvgContainer = styled.div<{
@@ -48,8 +48,8 @@ const Checkered = styled.div`
   transform: scaleX(1) scaleY(1) scaleZ(1);
 `
 const SvgElements: React.FC<{
-  els: MojiElement[]
-  select: (el: MojiElement, k: number) => void
+  els: Shape[]
+  select: (el: Shape, k: number) => void
   selected: number | undefined
   counts: { [p: number]: number }
 }> = ({ els, select, selected, counts }) => (

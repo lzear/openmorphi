@@ -1,6 +1,6 @@
-import { ElementCircle, ElementEllipse } from './index'
+import { ShapeCircle, ShapeEllipse } from './index'
 
-export const circle2ellipse = (e: ElementCircle): ElementEllipse => {
+export const circle2ellipse = (e: ShapeCircle): ShapeEllipse => {
   const { r, ...props } = e.attributes
   return {
     tagName: 'ellipse',

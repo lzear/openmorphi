@@ -36,5 +36,9 @@ module.exports = {
       },
     },
   ],
-  plugins: ['@typescript-eslint', 'prettier'],
+  plugins: [
+    '@typescript-eslint',
+    'prettier',
+    // 'only-warn'
+  ],
 }

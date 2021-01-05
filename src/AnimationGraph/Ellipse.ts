@@ -1,4 +1,4 @@
-import { ElementEllipse, ElementPath } from './index'
+import { ShapeEllipse, ShapePath } from './index'
 
 function getD(cx: number, cy: number, rx: number, ry: number) {
   const kappa = 0.5522847498
@@ -13,7 +13,7 @@ function getD(cx: number, cy: number, rx: number, ry: number) {
   return d
 }
 
-export const ellipse2path = (e: ElementEllipse): ElementPath => {
+export const ellipse2path = (e: ShapeEllipse): ShapePath => {
   const { cx, cy, rx, ry, ...props } = e.attributes
   return {
     tagName: 'path',

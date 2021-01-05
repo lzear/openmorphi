@@ -8,6 +8,7 @@ import { ReactComponent as Chart } from './examples/chart.svg'
 import { ReactComponent as Recy } from './examples/recy.svg'
 import SavedAnimations from './SavedAnimations'
 import { H3 } from '../components/Styled'
+import { SvgStar } from '../svgStar'
 
 const H1 = styled.h1``
 const SvgW = styled.div`
@@ -26,7 +27,16 @@ const Home: React.FC = () => {
   return (
     <div>
       <H1>OpenMorphi</H1>
-      <p>
+      <div style={{ display: 'flex' }}>
+        <SvgStar />
+        <p style={{ flex: '1 0 auto', paddingLeft: 10 }}>
+          <strong>
+            <Link to="/infinite">Random animations</Link>
+          </strong>
+        </p>
+      </div>
+      <div style={{ clear: 'both' }} />
+      <p style={{ marginTop: 15 }}>
         <strong>
           Build SVG animations between 2 emojis from{' '}
           <a href="https://openmoji.org/">OpenMoji</a>

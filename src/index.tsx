@@ -11,6 +11,7 @@ import Animations from './views/Animation'
 import Footer from './views/Footer'
 import styled from 'styled-components'
 import { client } from './utils/apollo'
+import Infinite from './components/Infinite'
 const Main = styled.div`
   margin-bottom: 200px;
 `
@@ -26,6 +27,9 @@ ReactDOM.render(
               </Route>
               <Route path="/animations">
                 <Animations />
+              </Route>
+              <Route path="/infinite">
+                <Infinite />
               </Route>
               <Route path="/">
                 <Home />

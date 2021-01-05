@@ -7,43 +7,43 @@ import { ellipse2path } from './Ellipse'
 import { Attributes } from '../types'
 import { animationObjectsFromPair } from './SvgAnimate'
 
-interface AbstractElement {
+interface AbstractShape {
   attributes: Attributes
   transformationCost: number
   transformationList: string[]
 }
-export interface ElementPath extends AbstractElement {
+export interface ShapePath extends AbstractShape {
   readonly tagName: 'path'
 }
-export interface ElementLine extends AbstractElement {
+export interface ShapeLine extends AbstractShape {
   readonly tagName: 'line'
 }
-export interface ElementPolyline extends AbstractElement {
+export interface ShapePolyline extends AbstractShape {
   readonly tagName: 'polyline'
 }
-export interface ElementPolygon extends AbstractElement {
+export interface ShapePolygon extends AbstractShape {
   readonly tagName: 'polygon'
 }
-export interface ElementRect extends AbstractElement {
+export interface ShapeRect extends AbstractShape {
   readonly tagName: 'rect'
 }
-export interface ElementCircle extends AbstractElement {
+export interface ShapeCircle extends AbstractShape {
   readonly tagName: 'circle'
 }
-export interface ElementEllipse extends AbstractElement {
+export interface ShapeEllipse extends AbstractShape {
   readonly tagName: 'ellipse'
 }
 
-export type MojiElement =
-  | ElementPath
-  | ElementEllipse
-  | ElementLine
-  | ElementRect
-  | ElementCircle
-  | ElementPolygon
-  | ElementPolyline
+export type Shape =
+  | ShapePath
+  | ShapeEllipse
+  | ShapeLine
+  | ShapeRect
+  | ShapeCircle
+  | ShapePolygon
+  | ShapePolyline
 
-export const derivedElements = (e: MojiElement): MojiElement[] => {
+export const derivedElements = (e: Shape): Shape[] => {
   if (e.tagName === 'path') return [e]
   if (e.tagName === 'line') return [e, line2pathR(e)]
   if (e.tagName === 'polyline') return [e, ...derivedElements(polyline2path(e))]
@@ -104,14 +104,11 @@ export const splitAttributes = (
   }
 }
 
-export const generateAnimationObjets = (
-  mojiA: MojiElement,
-  mojiB: MojiElement,
-) => {
-  const derivedElements1 = derivedElements(mojiA)
-  const derivedElements2 = derivedElements(mojiB)
-  return derivedElements1.flatMap((derivedA) =>
-    derivedElements2
+export const generateAnimationObjets = (shapeA: Shape, shapeB: Shape) => {
+  const derivedShapes1 = derivedElements(shapeA)
+  const derivedShapes2 = derivedElements(shapeB)
+  return derivedShapes1.flatMap((derivedA) =>
+    derivedShapes2
       .filter((de2) => derivedA.tagName === de2.tagName)
       .flatMap((derivedB) => {
         const {
