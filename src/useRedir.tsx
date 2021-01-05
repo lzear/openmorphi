@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import { History, Location } from 'history'
 import _ from 'lodash'
@@ -36,17 +36,18 @@ export const useRedir = (): void => {
   }, [history, json, location.search])
 }
 
+export const loadMojiSvg = async (hexcode: string) => {
+  const svgResponse: Response = await fetch(
+    `https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@12.1.0/color/svg/${hexcode}.svg`,
+  )
+  return svgResponse.text()
+}
+
 export const useLoadFromHexcode = (hexcode: string | null) => {
   const [svg, setSvg] = useState<string | null>(null)
   useEffect(() => {
     if (hexcode) {
-      const load = async () => {
-        const svgResponse: Response = await fetch(
-          `https://cdn.jsdelivr.net/gh/hfg-gmuend/openmoji@12.1.0/color/svg/${hexcode}.svg`,
-        )
-        const text = await svgResponse.text()
-        setSvg(text)
-      }
+      const load = async () => setSvg(await loadMojiSvg(hexcode))
       load()
     }
   }, [hexcode])

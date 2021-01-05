@@ -31,8 +31,8 @@ const AnimationMaker: React.FC<{
   svg1: { hex: string; svg: string }
   svg2: { hex: string; svg: string }
 }> = ({ svg1, svg2 }) => {
-  const [selectedElement1, selectElement1] = useState<MojiElem | null>(null)
-  const [selectedElement2, selectElement2] = useState<MojiElem | null>(null)
+  const [selectedShape1, selectShape1] = useState<MojiElem | null>(null)
+  const [selectedShape2, selectShape2] = useState<MojiElem | null>(null)
   const [animations, setAnimations] = useState<AnimationElement[]>([])
   const counts: {
     a: { [p: number]: number }
@@ -43,30 +43,30 @@ const AnimationMaker: React.FC<{
   }
   return (
     <>
-      <H3>2. Select pairs of elements to animate</H3>
+      <H3>2. Select a pair of shapes to animate</H3>
       <SvgChildrenPicker
         counts={counts}
         svg1={svg1.svg}
         svg2={svg2.svg}
-        selected1={selectedElement1}
-        selected2={selectedElement2}
-        select1={selectElement1}
-        select2={selectElement2}
+        selected1={selectedShape1}
+        selected2={selectedShape2}
+        select1={selectShape1}
+        select2={selectShape2}
       />
 
-      {selectedElement1 && selectedElement2 && (
+      {selectedShape1 && selectedShape2 && (
         <>
           <H3>3. Select an animation that looks okay</H3>
           <AnimationPicker
-            el1={selectedElement1}
-            el2={selectedElement2}
+            el1={selectedShape1}
+            el2={selectedShape2}
             select={(animation) =>
               setAnimations((animations) => [
                 ...animations,
                 {
                   id: randomString(),
-                  idx1: selectedElement1.idx,
-                  idx2: selectedElement2.idx,
+                  idx1: selectedShape1.idx,
+                  idx2: selectedShape2.idx,
                   ...animation,
                 },
               ])

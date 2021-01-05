@@ -1,7 +1,7 @@
 import React from 'react'
 import _ from 'lodash'
 import { animD } from './Path'
-import { splitAttributes, MojiElement } from '.'
+import { splitAttributes, Shape } from '.'
 import { adjustPointsLength } from './Poly'
 import { AnimationData, Attributes, OkTagNames } from '../types'
 
@@ -68,7 +68,7 @@ export const Animated: React.FC<{
     )),
   )
 
-export const DisplaySvgElement: React.FC<{ el: MojiElement }> = ({ el }) =>
+export const DisplaySvgElement: React.FC<{ el: Shape }> = ({ el }) =>
   React.createElement(el.tagName, convertAttributesForJsx(el.attributes))
 
 export const animationObjectsPath = (
@@ -155,21 +155,26 @@ export const animationObjectsPolygon = (
 }
 
 export const animationObjectsFromPair = (
-  e1: MojiElement,
-  e2: MojiElement,
+  shape1: Shape,
+  shape2: Shape,
 ): {
   attributesConstant: Attributes
   attributesToAnimateList: { [p: string]: [string | null, string | null] }[]
   tagName: OkTagNames
 } => {
-  if (e1.tagName !== e2.tagName) throw Error('non matching svgelem type')
-  if (e1.tagName === 'polygon')
-    return animationObjectsPolygon(e1.attributes, e2.attributes)
-  if (e1.tagName === 'polyline')
-    return animationObjectsPolyline(e1.attributes, e2.attributes)
-  if (e1.tagName === 'path')
-    return animationObjectsPath(e1.attributes, e2.attributes)
-  if (['ellipse', 'circle', 'rect', 'line'].includes(e1.tagName))
-    return animationObjectsSimple(e1.tagName, e1.attributes, e2.attributes)
+  if (shape1.tagName !== shape2.tagName)
+    throw Error('non matching svgelem type')
+  if (shape1.tagName === 'polygon')
+    return animationObjectsPolygon(shape1.attributes, shape2.attributes)
+  if (shape1.tagName === 'polyline')
+    return animationObjectsPolyline(shape1.attributes, shape2.attributes)
+  if (shape1.tagName === 'path')
+    return animationObjectsPath(shape1.attributes, shape2.attributes)
+  if (['ellipse', 'circle', 'rect', 'line'].includes(shape1.tagName))
+    return animationObjectsSimple(
+      shape1.tagName,
+      shape1.attributes,
+      shape2.attributes,
+    )
   throw Error('non matching svgelem type')
 }

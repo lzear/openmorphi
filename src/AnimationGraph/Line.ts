@@ -1,6 +1,6 @@
-import { ElementLine, ElementPath } from './index'
+import { ShapeLine, ShapePath } from './index'
 
-export const line2pathR = (line: ElementLine): ElementPath => {
+export const line2pathR = (line: ShapeLine): ShapePath => {
   const { x1, x2, y1, y2, ...props } = line.attributes
   return {
     tagName: 'path',

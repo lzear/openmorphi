@@ -74,7 +74,15 @@ export class Path {
     const ab = this.absolute()
     const n = ab.normalize()
     if (limit) return [n]
-    return [n, Path.fromString(reverseNormalized(nn(n.toString())))]
+    try {
+      const reversed: NormalizedShape = Path.fromString(
+        reverseNormalized(nn(n.toString())),
+      )
+      return [n, reversed]
+    } catch (e) {
+      console.error(e)
+      return [n]
+    }
   }
 
   get subPaths(): PathMono[] {
