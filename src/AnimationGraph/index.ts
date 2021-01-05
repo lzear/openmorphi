@@ -56,7 +56,7 @@ export const derivedElements = (e: Shape): Shape[] => {
 }
 
 const convertAttrValuesForAnim = (
-  values: [string | null, string | null],
+  values: [string, string],
   attributeName: string,
 ) =>
   values.map((value) => {
@@ -65,15 +65,15 @@ const convertAttrValuesForAnim = (
       (!value || ['none'].includes(value))
     )
       return 'transparent'
-    return value
-  }) as [string | null, string | null]
+    return value || ''
+  }) as [string, string]
 
 export const splitAttributes = (
   attributes1: Attributes,
   attributes2: Attributes,
 ): {
   attributesConstant: Attributes
-  attributesToAnimate: { [atr: string]: [string | null, string | null] }
+  attributesToAnimate: { [atr: string]: [string, string] }
 } => {
   const attributesA = Object.keys(attributes1)
   const attributesB = Object.keys(attributes2)
@@ -83,17 +83,14 @@ export const splitAttributes = (
   const attributesToAnimate = _.uniq([...attributesA, ...attributesB])
     .filter((k) => attributes2[k] !== attributes1[k])
     .reduce(
-      (
-        prev: { [atr: string]: [string | null, string | null] },
-        current: string,
-      ) => ({
+      (prev: { [atr: string]: [string, string] }, current: string) => ({
         ...prev,
-        [current]: [attributes1[current], attributes2[current]] as [
-          string | null,
-          string | null,
+        [current]: [attributes1[current] || '', attributes2[current] || ''] as [
+          string,
+          string,
         ],
       }),
-      {} as { [atr: string]: [string | null, string | null] },
+      {} as { [atr: string]: [string, string] },
     )
   return {
     attributesConstant: _.pick(attributes1, constantAttr),
