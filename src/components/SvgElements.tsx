@@ -39,11 +39,15 @@ const Checkered = styled.div`
     ),
     white;
   background-repeat: repeat, repeat;
-  background-position: 0px 0, 5px 5px;
+  background-position:
+    0px 0,
+    5px 5px;
   transform-origin: 0 0 0;
   background-origin: padding-box, padding-box;
   background-clip: border-box, border-box;
-  background-size: 10px 10px, 10px 10px;
+  background-size:
+    10px 10px,
+    10px 10px;
   transition: none;
   transform: scaleX(1) scaleY(1) scaleZ(1);
 `

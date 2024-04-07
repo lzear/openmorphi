@@ -10,10 +10,13 @@ export const zipperSkew = <T extends any>(
   const ratio = shorter.length / longer.length
   if (ratio > 1)
     return zipperSkew(shorter, longer).map((e) => e.reverse() as [T, T])
-  return longer.reduce((acc, lon, k) => {
-    const sho: T = shorter[Math.floor(k * ratio)]
-    return [...acc, [lon, sho] as [T, T]]
-  }, [] as [T, T][])
+  return longer.reduce(
+    (acc, lon, k) => {
+      const sho: T = shorter[Math.floor(k * ratio)]
+      return [...acc, [lon, sho] as [T, T]]
+    },
+    [] as [T, T][],
+  )
 }
 
 const animPairs: (
@@ -33,11 +36,8 @@ const animPairs: (
       derivedShapes2
         .filter((de2) => derivedA.tagName === de2.tagName)
         .flatMap((derivedB) => {
-          const {
-            attributesConstant,
-            attributesToAnimateList,
-            tagName,
-          } = animationObjectsFromPair(derivedA, derivedB)
+          const { attributesConstant, attributesToAnimateList, tagName } =
+            animationObjectsFromPair(derivedA, derivedB)
           return attributesToAnimateList.map((attributesToAnimate) => ({
             tagName,
             attributesConstant,

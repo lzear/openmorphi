@@ -34,7 +34,7 @@ export class Path {
 
   static fromArray<T extends Path>(arr: (string | number)[][]): T {
     const instructions = arr.map(
-      ([letter, ...values]) => ({ letter, values } as Instruction),
+      ([letter, ...values]) => ({ letter, values }) as Instruction,
     )
     return new this(instructions) as T
   }
@@ -109,20 +109,18 @@ export class Path {
     if (j.length === 0) return []
     const [firstPair, ...pairs] = j
     const o: [Path, Path][][] = Path.anniSub(pairs)
-    return Path.animateSingleSubPathShape(
-      firstPair[0],
-      firstPair[1],
-    ).flatMap((a) => (o.length ? o.map((oo) => [a, ...oo]) : [[a]]))
+    return Path.animateSingleSubPathShape(firstPair[0], firstPair[1]).flatMap(
+      (a) => (o.length ? o.map((oo) => [a, ...oo]) : [[a]]),
+    )
   }
 
   static generateCombinations = (j: [PathMono, PathMono][]): [Path, Path][] => {
     if (j.length === 0) return []
     const [firstPair, ...pairs] = j
     const o = Path.generateCombinations(pairs)
-    return Path.animateSingleSubPathShape(
-      firstPair[0],
-      firstPair[1],
-    ).flatMap((a) => [a, ...o])
+    return Path.animateSingleSubPathShape(firstPair[0], firstPair[1]).flatMap(
+      (a) => [a, ...o],
+    )
   }
 
   static createSubPathsPairsCombination = (

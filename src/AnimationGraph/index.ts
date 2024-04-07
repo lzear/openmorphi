@@ -111,11 +111,8 @@ export const generateAnimationObjets = (shapeA: Shape, shapeB: Shape) => {
     derivedShapes2
       .filter((de2) => derivedA.tagName === de2.tagName)
       .flatMap((derivedB) => {
-        const {
-          attributesConstant,
-          attributesToAnimateList,
-          tagName,
-        } = animationObjectsFromPair(derivedA, derivedB)
+        const { attributesConstant, attributesToAnimateList, tagName } =
+          animationObjectsFromPair(derivedA, derivedB)
         return attributesToAnimateList.map((attributesToAnimate) => ({
           tagName,
           attributesConstant,
