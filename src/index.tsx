@@ -1,6 +1,5 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/client'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
@@ -12,36 +11,34 @@ import Footer from './views/Footer'
 import styled from 'styled-components'
 import { client } from './utils/apollo'
 import Infinite from './components/Infinite'
+import { createRoot } from 'react-dom/client'
 const Main = styled.div`
   margin-bottom: 200px;
 `
-ReactDOM.render(
+
+const container = document.getElementById('root')
+
+if (!container) throw new Error('No container found')
+
+const root = createRoot(container) // createRoot(container!) if you use TypeScript
+root.render(
   <BrowserRouter>
     <WithOpenMoji>
       <WithSpeed>
         <Main>
           <ApolloProvider client={client}>
-            <Switch>
-              <Route path="/create">
-                <App />
-              </Route>
-              <Route path="/animations">
-                <Animations />
-              </Route>
-              <Route path="/infinite">
-                <Infinite />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route path="/create" element={<App />}></Route>
+              <Route path="/animations" element={<Animations />}></Route>
+              <Route path="/infinite" element={<Infinite />}></Route>
+              <Route path="/" element={<Home />}></Route>
+            </Routes>
           </ApolloProvider>
         </Main>
         <Footer />
       </WithSpeed>
     </WithOpenMoji>
   </BrowserRouter>,
-  document.getElementById('root'),
 )
 
 // If you want your app to work offline and load faster, you can change

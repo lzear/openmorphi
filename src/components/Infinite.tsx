@@ -150,12 +150,13 @@ const Infinite: React.FC = () => {
         <span style={{ marginLeft: 6, fontSize: '2.2em' }}>
           {speedometer[Math.floor((speed / 101) * speedometer.length)]}
         </span>
-        <Slider
+        {/*// @ts-ignore*/}
+        <Slider<number>
           min={0}
           max={100}
           step={1}
           value={speed}
-          onChange={(v: number) => setSpeed(v)}
+          onChange={(v) => setSpeed(v)}
         />
       </div>
       {/*<div style={{ display: 'flex', flexDirection: 'row' }}>*/}

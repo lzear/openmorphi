@@ -1,7 +1,5 @@
 import React, { useRef, useContext } from 'react'
 import styled from 'styled-components'
-import { useHistory } from 'react-router-dom'
-import { History } from 'history'
 import Slider from 'rc-slider'
 import { Animated } from '../../AnimationGraph/SvgAnimate'
 import { SpeedContext } from './SpeedContext'
@@ -9,6 +7,7 @@ import { useCreateMorphMutation } from '../../generated/graphql'
 import { AnimationElement } from '../../types'
 import { MorphData } from '../../fauna'
 import { validate } from '../../utils/svgsanitize'
+import { useNavigate } from 'react-router-dom'
 
 interface Interface {
   readonly widthA?: number
@@ -53,7 +52,7 @@ const FinalRender: React.FC<{
   const [save] = useCreateMorphMutation()
   const ref = useRef<HTMLDivElement | null>(null)
 
-  const history: History = useHistory()
+  const history = useNavigate()
   return (
     <div>
       <AnimationPreview ref={ref} widthA={width}>
@@ -68,7 +67,7 @@ const FinalRender: React.FC<{
           <div style={{ marginBottom: 30 }}>
             Duration:
             {/* @ts-ignore */}
-            <Slider
+            <Slider<number>
               min={200}
               max={10000}
               step={50}
@@ -79,12 +78,12 @@ const FinalRender: React.FC<{
           <div style={{ marginBottom: 30 }}>
             Spline steepness:
             {/* @ts-ignore */}
-            <Slider
+            <Slider<number>
               min={0}
               max={1}
               step={0.01}
               value={splineTuple[0]}
-              onChange={(v: number) => splineTuple[1](v)}
+              onChange={(v) => splineTuple[1](v)}
             />
           </div>
           Proud of your animation?
@@ -106,7 +105,7 @@ const FinalRender: React.FC<{
                   },
                   update: (a, b) => {
                     const id = b.data?.createMorph._id
-                    if (id) history.replace(`/animations?id=${id}`)
+                    if (id) history(`/animations?id=${id}`, { replace: true })
                   },
                 })
             }}

@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState } from 'react'
 import _ from 'lodash'
 import { OpenMoji, OpenMojiContext } from '../withOpenMoji'
-import { useHistory } from 'react-router-dom'
-import { History } from 'history'
+import { useNavigate } from 'react-router-dom'
 import Fuse from 'fuse.js'
 import MojiE from '../views/CreateAnimation/MojiSelect'
 import Spinner from './Spinner'
@@ -40,7 +39,7 @@ const Emojinput: React.FC = () => {
     return _.debounce(setSearch, 2000)
   }, [])
 
-  const history: History = useHistory()
+  const history = useNavigate()
   return (
     <>
       <div style={{ display: 'flex' }}>

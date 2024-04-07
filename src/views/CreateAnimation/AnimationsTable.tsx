@@ -1,5 +1,5 @@
 import React, { SetStateAction, Dispatch } from 'react'
-import arrayMove from 'array-move'
+import { arrayMoveImmutable } from 'array-move'
 
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
 import { DeleteOutlined } from '@ant-design/icons'
@@ -70,7 +70,11 @@ const AnimationList: React.FC<{
         axis="y"
         onSortEnd={({ oldIndex, newIndex }) =>
           setAnimations(
-            arrayMove(animations, reversed[oldIndex].i, reversed[newIndex].i),
+            arrayMoveImmutable(
+              animations,
+              reversed[oldIndex].i,
+              reversed[newIndex].i,
+            ),
           )
         }
       />

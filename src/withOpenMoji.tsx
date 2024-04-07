@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, PropsWithChildren } from 'react'
 
 export const OpenMojiContext = React.createContext<OpenMoji[] | null>(null)
 const getMojis = async (): Promise<OpenMoji[]> => {
@@ -16,7 +16,7 @@ export type OpenMoji = {
   openmoji_tags: string
 }
 
-export const WithOpenMoji: React.FC = ({ children }) => {
+export const WithOpenMoji: React.FC<PropsWithChildren> = ({ children }) => {
   const [json, setJson] = useState<OpenMoji[] | null>(null)
   useEffect(() => {
     const loadMojis = async (): Promise<void> => {

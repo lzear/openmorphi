@@ -1,11 +1,11 @@
 import React from 'react'
-import { History } from 'history'
 import { useLocation } from 'react-router-dom'
 import { ArrowLeftOutlined, ArrowRightOutlined } from '@ant-design/icons'
 import { addQueryParam, useLoadFromHexcode } from '../../useRedir'
 import SVG from '../../components/SVG'
 import { OpenMoji } from '../../withOpenMoji'
 import styled from 'styled-components'
+import { NavigateFunction } from 'react-router'
 
 const Container = styled.div`
   width: 60px;
@@ -25,7 +25,7 @@ const HoverChoice = styled.div`
 const Button = styled.button`
   cursor: pointer;
 `
-const MojiSelect: React.FC<{ moji: OpenMoji; history: History }> = ({
+const MojiSelect: React.FC<{ moji: OpenMoji; history: NavigateFunction }> = ({
   moji,
   history,
 }) => {

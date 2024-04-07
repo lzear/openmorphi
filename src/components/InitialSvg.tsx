@@ -2,8 +2,7 @@ import React, { useContext } from 'react'
 import _ from 'lodash'
 import { ReloadOutlined } from '@ant-design/icons'
 import styled from 'styled-components'
-import { useHistory, useLocation } from 'react-router-dom'
-import { History } from 'history'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { OpenMojiContext } from '../withOpenMoji'
 import { addQueryParam } from '../useRedir'
 import SVG from './SVG'
@@ -19,7 +18,7 @@ const InitialSvg: React.FC<{
   name: string
   svg: string
 }> = ({ name, svg }) => {
-  const history: History = useHistory()
+  const history = useNavigate()
   const location = useLocation()
   const json = useContext(OpenMojiContext)
   return (

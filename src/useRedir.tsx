@@ -1,18 +1,19 @@
 import { useContext, useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
-import { History, Location } from 'history'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { Location } from 'history'
 import _ from 'lodash'
 import { OpenMojiContext } from './withOpenMoji'
+import { NavigateFunction } from 'react-router'
 
-const replaceQueryParams = (history: History, entries: string[][]) => {
+const replaceQueryParams = (history: NavigateFunction, entries: string[][]) => {
   const s = entries.map(([k, v]) => `${k}=${v}`).join('&')
-  history.replace(`?${s}`)
+  history(`?${s}`, { replace: true })
 }
 
 export const addQueryParam = (
   name: string,
   value: string,
-  history: History,
+  history: NavigateFunction,
   location: Location,
 ) => {
   const urlParams = new URLSearchParams(location.search)
@@ -21,7 +22,7 @@ export const addQueryParam = (
 }
 
 export const useRedir = (): void => {
-  const history: History = useHistory()
+  const history = useNavigate()
   const location = useLocation()
   const json = useContext(OpenMojiContext)
   useEffect(() => {
