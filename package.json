@@ -9,7 +9,8 @@
     "eject": "react-scripts eject",
     "eslint": "eslint './**/*.{ts,tsx,js,jsx}'",
     "codegen": "graphql-codegen --config codegen.yml",
-    "analyze": "source-map-explorer 'build/static/js/*.js'"
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "ncu": "npx npm-check-updates --upgrade"
   },
   "dependencies": {
     "@types/d3": "^6.2.0",
