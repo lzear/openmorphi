@@ -6,13 +6,7 @@ module.exports = {
     node: true,
     es6: true,
   },
-  extends: [
-    'react-app',
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'prettier/@typescript-eslint',
-    'plugin:prettier/recommended',
-  ],
+  extends: ['eslint:recommended', 'react-app', 'plugin:prettier/recommended'],
   rules: {
     'prettier/prettier': 2,
     'react/jsx-filename-extension': [1, { extensions: ['.js', '.tsx'] }],
@@ -36,9 +30,5 @@ module.exports = {
       },
     },
   ],
-  plugins: [
-    '@typescript-eslint',
-    'prettier',
-    // 'only-warn'
-  ],
+  plugins: ['prettier'],
 }

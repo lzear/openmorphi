@@ -7,7 +7,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "eslint": "eslint './**/*.{ts,tsx,js,jsx}'",
+    "lint": "eslint './**/*.{ts,tsx,js,jsx}'",
     "codegen": "graphql-codegen --config codegen.yml",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "ncu": "npx npm-check-updates --upgrade"
