@@ -3669,15 +3669,15 @@
     "@typescript-eslint/typescript-estree" "5.62.0"
     debug "^4.3.4"
 
-"@typescript-eslint/parser@^7.5.0":
-  version "7.5.0"
-  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-7.5.0.tgz#1eeff36309ac2253c905dd4a88b4b71b72a358ed"
-  integrity sha512-cj+XGhNujfD2/wzR1tabNsidnYRaFfEkcULdcIyVBYcXjBvBKOes+mpMBP7hMpOyk+gBcfXsrg4NBGAStQyxjQ==
+"@typescript-eslint/parser@^7.6.0":
+  version "7.8.0"
+  resolved "https://registry.yarnpkg.com/@typescript-eslint/parser/-/parser-7.8.0.tgz#1e1db30c8ab832caffee5f37e677dbcb9357ddc8"
+  integrity sha512-KgKQly1pv0l4ltcftP59uQZCi4HUYswCLbTqVZEJu7uLX8CTLyswqMLqLN+2QFz4jCptqWVV4SB7vdxcH2+0kQ==
   dependencies:
-    "@typescript-eslint/scope-manager" "7.5.0"
-    "@typescript-eslint/types" "7.5.0"
-    "@typescript-eslint/typescript-estree" "7.5.0"
-    "@typescript-eslint/visitor-keys" "7.5.0"
+    "@typescript-eslint/scope-manager" "7.8.0"
+    "@typescript-eslint/types" "7.8.0"
+    "@typescript-eslint/typescript-estree" "7.8.0"
+    "@typescript-eslint/visitor-keys" "7.8.0"
     debug "^4.3.4"
 
 "@typescript-eslint/scope-manager@5.62.0":
