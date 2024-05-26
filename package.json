@@ -13,7 +13,7 @@
     "ncu": "npx npm-check-updates --upgrade"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.3.6",
+    "@ant-design/icons": "^5.3.7",
     "@apollo/client": "^3.9.11",
     "@graphql-codegen/cli": "5.0.2",
     "@graphql-codegen/fragment-matcher": "5.0.2",
